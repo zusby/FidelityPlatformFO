@@ -54,13 +54,14 @@ html{
 
 .headerContainer {
   width: 100%;
-
 }
 .headerTable {
   background-color: rgb(45,45,45);
   width: 100%;
+  padding-top: 20px;
   padding-left: 3vh;
   padding-right: 3vh;
+  padding-bottom: 20px;
 }
 
 .homeVP :first-child{
@@ -109,12 +110,15 @@ html{
   padding-top: 2vh;
 }
 
+.headerContainer::before{
+  background-color: rgb(30,30,30);
+}
+
 .headerContainer {
   width: 100%;
-
 }
 .headerTable {
-  background-color: rgb(45,45,45);
+  background-color: rgb(30,30,30);
   width: 100%;
   padding-left: 3vh;
   padding-right: 3vh;

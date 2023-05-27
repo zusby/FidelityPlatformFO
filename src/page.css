@@ -1,6 +1,5 @@
 body{
-    background: #edf1f5;
-    margin-top:20px;
+    background-color: rgb(45,45,45);
 }
 .card {
     position: relative;
