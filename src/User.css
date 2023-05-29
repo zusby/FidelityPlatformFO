@@ -33,7 +33,7 @@ html{
 }
 
 .tableBG {
-  background-color: white;
+  background-color: rgb(45,45,45);
   padding-left: 3vh;
   padding-right: 3vh;
 }
@@ -98,7 +98,7 @@ html{
 
 .user-table > tbody > tr{
   border-bottom: 2px solid rgb(150, 150, 150);
-
+  
 }
 
 .divSpacer{
@@ -106,8 +106,8 @@ html{
   background-color: rgb(45,45,45);
 }.nonfirst-element {
 
-   padding-top: 2vh;
- }
+  padding-top: 2vh;
+}
 
 .headerContainer {
   width: 100%;
@@ -155,11 +155,10 @@ html{
 
 .user-table > tbody > tr{
   border-bottom: 2px solid rgb(150, 150, 150);
-
+  
 }
 
 .divSpacer{
   height: 2vh;
   background-color: rgb(45,45,45);
 }
-
