@@ -47,8 +47,12 @@ export default function UserEditPage() {
     }
     let navigate = useNavigate();
 
-    const routeChange= ()=>{
+    const routeChangeCard= ()=>{
         let path = `/user/${user.id}/card`;
+        navigate(path,{state:{id:user.id}});
+    }
+    const routeViewPurchases= ()=>{
+        let path = `/user/${user.id}/purchase-history`;
         navigate(path,{state:{id:user.id}});
     }
 
@@ -63,14 +67,14 @@ export default function UserEditPage() {
 
                             <tbody>
                             <tr>
-                                <td>
-                                    <button onClick={routeChange}>
+                                <td>,
+                                    <button onClick={routeChangeCard}>
                                         Card
                                     </button>
 
                                 </td>
                                 <td>
-                                    <button type="submit" onClick={() => navigate(`/}`)}>Purchase History
+                                    <button type="submit" onClick={routeViewPurchases}>Purchase History
                                     </button>
                                 </td>
                                 <td>

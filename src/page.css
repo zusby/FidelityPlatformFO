@@ -35,3 +35,23 @@ body{
     max-width: 150px;
     border-radius: 20px;
 }
+.scrollable-table {
+    max-height: 1000px; /* Set a default maximum height */
+    overflow-y: auto;
+}
+
+@media screen and (max-width: 768px) {
+    .scrollable-table {
+        max-height: 300px; /* Set a different maximum height for smaller screens */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .scrollable-table {
+        max-height: 200px; /* Set a different maximum height for even smaller screens */
+    }
+}
+.search-bar {
+    position: relative
+}
+

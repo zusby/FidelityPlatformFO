@@ -11,6 +11,7 @@ import Contact from "./routes/contact.jsx";
 import UsersList from "./routes/users-list.jsx";
 import UserEditPage from "./user/UserEditPage.jsx";
 import FidelityCard from "./user/FidelityCard.jsx";
+import UserPurchaseHistory from "./user/UserPurchaseHistory.jsx";
 
 
 
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
             {
                 path:"user/:userId/card",
                 element: <FidelityCard/>
+            },
+            {
+                path:"user/:userId/purchase-history",
+                element:<UserPurchaseHistory/>
             }
         ]
     },
