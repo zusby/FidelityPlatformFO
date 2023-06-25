@@ -4,11 +4,16 @@ import '../page.css'
 import CouponList from './CouponList'
 import DefaultHeader from "../header.jsx";
 import { useLocation } from 'react-router-dom';
+import React from 'react';
 
 const {state} = useLocation
 
 
-export default function UserCoupons() {
+class UserCoupons extends React.Component {
+
+
+
+    render(){
     return (
 
         <div className="App"  >
@@ -45,4 +50,7 @@ export default function UserCoupons() {
             </div>
         </div>
     );
+ }
 }
+
+export default UserCoupons;

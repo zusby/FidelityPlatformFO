@@ -1,4 +1,3 @@
-@import "~bootstrap/dist/css/bootstrap.css."
 .btnPurc{
     width: 3vh;
     height: 3vh;
@@ -23,7 +22,18 @@
     color: rgb(220, 220, 220);
 }
 
-.SlashCircle:hover{
-    color: black;
+.registrationModal{
+    background-color: #eeeeee;
+    max-width: 600px; /* Adjust the width as per your requirement */
+    max-height:95%;
+    left: 50%;
+}
+
+.registrationModelContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
 }
 

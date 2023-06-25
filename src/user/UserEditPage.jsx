@@ -47,12 +47,16 @@ export default function UserEditPage() {
     }
     let navigate = useNavigate();
 
-    const routeChange= ()=>{
+    const navigateToFidelityCard= ()=>{
         let path = `/user/${user.id}/card`;
         navigate(path,{state:{id:user.id}});
     }
     const navigateToCoupons= ()=>{
         let path = `/user/${user.id}/coupons`;
+        navigate(path,{state:{id:user.id}});
+    }
+    const navigateToPurchaseHistory= ()=>{
+        let path = `/user/${user.id}/purchase-history`;
         navigate(path,{state:{id:user.id}});
     }
 
@@ -68,13 +72,13 @@ export default function UserEditPage() {
                             <tbody>
                             <tr>
                                 <td>
-                                    <button onClick={routeChange}>
+                                    <button onClick={navigateToFidelityCard}>
                                         Card
                                     </button>
 
                                 </td>
                                 <td>
-                                    <button type="submit" onClick={() => navigate(`/}`)}>Purchase History
+                                    <button type="submit" onClick={navigateToPurchaseHistory}>Purchase History
                                     </button>
                                 </td>
                                 <td>
@@ -135,4 +139,3 @@ export default function UserEditPage() {
             </>
         </div>);
 }
-

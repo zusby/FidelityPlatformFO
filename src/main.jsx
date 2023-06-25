@@ -1,9 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
-import {
-    createBrowserRouter,
-    RouterProvider,
-} from "react-router-dom";
+import {createBrowserRouter,RouterProvider} from "react-router-dom";
 import "./index.css";
 import Root from "./routes/root.jsx";
 import ErrorPage from "./error-page.jsx";
@@ -13,6 +10,7 @@ import UserEditPage from "./user/UserEditPage.jsx";
 import FidelityCard from "./user/FidelityCard.jsx";
 import UserCoupons from "./user/UserCoupons.jsx";
 import LoginPage from "./routes/LoginPage";
+import UserPurchaseHistory from "./user/UserPurchaseHistory.jsx";
 
 
 
@@ -39,16 +37,25 @@ const router = createBrowserRouter([
                 path:"user/:userId/card",
                 element: <FidelityCard/>
             },
-            { path:"user/:userId/coupons",
-              element : <UserCoupons/>
-           },
-           
+            {
+                path:"user/:userId/coupons",
+                element: <UserCoupons/>
+            },
+            {
+                path:"user/:userId/purchase-history",
+                element:<UserPurchaseHistory/>
+            }
         ]
     },
     {
-        path: "login",
-        element: <LoginPage/>
-       },
+    path:"/login",
+    element:<LoginPage/>
+    }
+  
+    
+            
+        
+    
 
 
 ]);
