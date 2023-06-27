@@ -1,4 +1,4 @@
-import {useLocation, useNavigate} from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './userForm.css'
 
 
@@ -6,7 +6,7 @@ import './userForm.css'
 export default function UserEditPage() {
 
 
-    const {state} = useLocation()
+    const { state } = useLocation()
 
     let user = {
         "name": "string",
@@ -30,15 +30,15 @@ export default function UserEditPage() {
     user = state.user;
 
     const date = Date.parse(user.birthDate);
-        const formattedDate = new Date(date);
+    const formattedDate = new Date(date);
 
-        // Extracting date components
-        const day = formattedDate.getDate();
-        const month = formattedDate.getMonth() + 1; // Months are zero-based, so we add 1
-        const year = formattedDate.getFullYear();
+    // Extracting date components
+    const day = formattedDate.getDate();
+    const month = formattedDate.getMonth() + 1; // Months are zero-based, so we add 1
+    const year = formattedDate.getFullYear();
 
-        // Creating the "dd/mm/yyyy" format
-        const normalDate = `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`;
+    // Creating the "dd/mm/yyyy" format
+    const normalDate = `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`;
 
 
     function convertToISODate(normalDate) {
@@ -47,17 +47,17 @@ export default function UserEditPage() {
     }
     let navigate = useNavigate();
 
-    const navigateToFidelityCard= ()=>{
+    const navigateToFidelityCard = () => {
         let path = `/user/${user.id}/card`;
-        navigate(path,{state:{id:user.id}});
+        navigate(path, { state: { id: user.id } });
     }
-    const navigateToCoupons= ()=>{
+    const navigateToCoupons = () => {
         let path = `/user/${user.id}/coupons`;
-        navigate(path,{state:{id:user.id}});
+        navigate(path, { state: { id: user.id } });
     }
-    const navigateToPurchaseHistory= ()=>{
+    const navigateToPurchaseHistory = () => {
         let path = `/user/${user.id}/purchase-history`;
-        navigate(path,{state:{id:user.id}});
+        navigate(path, { state: { id: user.id } });
     }
 
 
@@ -70,21 +70,21 @@ export default function UserEditPage() {
                         <table>
 
                             <tbody>
-                            <tr>
-                                <td>
-                                    <button onClick={navigateToFidelityCard}>
-                                        Card
-                                    </button>
+                                <tr>
+                                    <td>
+                                        <button onClick={navigateToFidelityCard}>
+                                            Card
+                                        </button>
 
-                                </td>
-                                <td>
-                                    <button type="submit" onClick={navigateToPurchaseHistory}>Purchase History
-                                    </button>
-                                </td>
-                                <td>
-                                    <button type="submit" onClick={navigateToCoupons}>Coupons</button>
-                                </td>
-                            </tr>
+                                    </td>
+                                    <td>
+                                        <button type="submit" onClick={navigateToPurchaseHistory}>Purchase History
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button type="submit" onClick={navigateToCoupons}>Coupons</button>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </form>
@@ -99,13 +99,13 @@ export default function UserEditPage() {
                         <div className="col-md-6">
                             <label className="small mb-1" form="inputFirstName">First name</label>
                             <input className="form-control" id="inputFirstName" type="text"
-                                   defaultValue={user.name}/>
+                                defaultValue={user.name} />
                         </div>
 
                         <div className="col-md-6">
                             <label className="small mb-1" form="inputLastName">Last name</label>
                             <input className="form-control" id="inputLastName" type="text"
-                                   defaultValue={user.surname}/>
+                                defaultValue={user.surname} />
                         </div>
                     </div>
                     <div className="row gx-3 mb-3">
@@ -113,25 +113,25 @@ export default function UserEditPage() {
                         <div className="col-md-6">
                             <label className="small mb-1" form="inputLocation">Address</label>
                             <input className="form-control" id="inputLocation" type="text"
-                                   defaultValue={user.address.street + user.address.city}/>
+                                defaultValue={user.address.street + user.address.city} />
                         </div>
                     </div>
                     <div className="mb-3">
                         <label className="small mb-1" htmlFor="inputEmailAddress">Email address</label>
                         <input className="form-control" id="inputEmailAddress" type="email"
-                               defaultValue={user.email}/>
+                            defaultValue={user.email} />
                     </div>
                     <div className="row gx-3 mb-3">
 
                         <div className="col-md-6">
                             <label className="small mb-1" htmlFor="inputPhone">Phone number</label>
                             <input className="form-control" id="inputPhone" type="tel"
-                                   defaultValue={user.telephoneNumber.substring(3, user.telephoneNumber.length)}/>
+                                defaultValue={user.telephoneNumber.substring(3, user.telephoneNumber.length)} />
                         </div>
                         <div className="col-md-6">
                             <label className="small mb-1" htmlFor="inputBirthday">Birthday</label>
                             <input className="form-control" id="inputBirthday" type="date" name="birthday"
-                                   value={convertToISODate(normalDate)} readOnly={true}/>
+                                value={convertToISODate(normalDate)} readOnly={true} />
                         </div>
                     </div>
                     <button className="btn btn-primary" type="button">Save changes</button>

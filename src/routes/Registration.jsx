@@ -1,30 +1,25 @@
 import React, { useState } from 'react';
 
-import {
-    Container,
-    CssBaseline,
-    Box,
-    Avatar,
-    Typography,
-    TextField,
-    FormControlLabel,
-    Checkbox,
-    Button,
-    Grid,
-    Link
-  } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Container, CssBaseline, Box, Avatar, Typography, TextField, FormControlLabel, Checkbox, Button, Grid, Link, Autocomplete, Alert } from '@mui/material';
+import './userTable.css'
+import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { auth } from '../FireBase'
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
-import Autocomplete from "react-google-autocomplete";
-import './usertable.css'
 export default function RegistrationForm() {
   const mapsAPIkey = "AIzaSyD_GPKVAAKbp1teq9Juu_pWefE7bWcG7Yg";
-  const[address, setAddress] = useState('');
+  const [address, setAddress] = useState('');
+  const [date, setDate] = useState(null);
   const [formData, setFormData] = useState({
+
     name: '',
     surname: '',
     telephoneNumber: '',
     email: '',
+    password: '',
     address: {
       street: '',
       zipCode: '',
@@ -35,24 +30,59 @@ export default function RegistrationForm() {
     rank: 'CUSTOMER'
   });
 
+
+
   const handleChange = (e) => {
     const { name, value } = e.target;
+    const updatedFormData = { ...formData };
+
+    // Handle nested properties (address) separately
+    if (name.startsWith("address.")) {
+      const nestedProp = name.split(".")[1];
+      updatedFormData.address[nestedProp] = value;
+    } else {
+      updatedFormData[name] = value;
+    }
+
+    setFormData(updatedFormData);
+  };
+  const handleDateChange = (date) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [name]: value
+      birthDate: date,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    //console.log(formData);
+    formData.address.street = address.value.structured_formatting.main_text;
+    formData.birthDate = date;
+
+    createUserWithEmailAndPassword(auth, formData.email, formData.password)
+      .then((userCredencial) => {
+        const user = userCredencial.user;
+        if (user !== null) {
+          registerUser(formData)
+          this.handleCloseModal();
+          
+        }
+      })
+      .catch((error) => console.log(error));
+    
+    console.log(formData)
   };
 
-  function handlePlaceSelected(place){
-    const selectedPlace = place.formatted_address;
-    setAddress({ selectedPlace });
+  function registerUser(user) {
+    fetch(`http://localhost:8080/api/v1/customer/register`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify(user),
+      }).catch((error) => console.error(error));
   }
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -109,6 +139,20 @@ export default function RegistrationForm() {
                 onChange={handleChange}
               />
             </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="password"
+                label="Password"
+                name="password"
+                type="password"
+                autoComplete="new-password"
+                value={formData.password}
+                onChange={handleChange}
+              />
+            </Grid>
             <Grid item xs={12}>
               <TextField
                 required
@@ -122,19 +166,67 @@ export default function RegistrationForm() {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                fullWidth
-                id="street"
-                label="Street"
-                name="address.street"
-                autoComplete="street-address"
-                value={formData.address.street}
-                onChange={handleChange}
+
+            <Grid item xs={12}>
+              <LocalizationProvider dateAdapter={AdapterDateFns} fullWidth
+                required>
+                <DatePicker
+                  label="Birthday"
+                  required
+                  value={date}
+                  onChange={(newValue) => {
+                    setDate(newValue);
+                  }}
+                  slotProps={{
+                    textField: { variant: 'outlined', fullWidth: true }
+                  }}
+                  format="dd/MM/yyyy"
+                  autoFocus={true}
+                />
+              </LocalizationProvider>
+            </Grid>
+
+
+            <Grid item xs={12} sm={6} >
+              <GooglePlacesAutocomplete
+                selectProps={{
+                  className: 'autocomplete',
+                  address,
+                  onChange: setAddress,
+                  styles: {
+
+                    container: (provided) => ({
+                      ...provided,
+                      flex: 1, // Add this to ensure the autocomplete fills the available space
+                    }),
+                    input: (provided) => ({
+                      ...provided,
+                      width: '100%',
+                      height: '100%',
+                      padding: '10px',
+                      fontSize: '16px',
+                      zIndex: 9999,
+                      color: 'blue',
+                      border: 'none', // Remove the border
+                      boxShadow: 'none', // Remove the box shadow
+
+                    }),
+                    option: (provided) => ({
+                      ...provided,
+                      color: 'blue',
+                    }),
+                    singleValue: (provided) => ({
+                      ...provided,
+                      color: 'blue',
+                    }),
+                  },
+                }}
+                apiOptions={{ language: 'it', region: 'it', type: 'address' }}
+                apiKey={mapsAPIkey}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
+
               <TextField
                 required
                 fullWidth
@@ -186,11 +278,6 @@ export default function RegistrationForm() {
             Sign Up
           </Button>
           <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link href="#" variant="body2">
-                Already have an account? Sign in
-              </Link>
-            </Grid>
           </Grid>
         </Box>
       </Box>

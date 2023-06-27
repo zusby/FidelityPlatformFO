@@ -33,9 +33,8 @@ export default function LoginPage() {
       "city": "string",
       "province": "string"
     },
-    "birthDate": "2023-06-25T10:55:05.998Z",
+    "birthDate": "",
     "rank": "CUSTOMER",
-    "id": "string"
   })
   
   const handleRegisterClick = () => {

@@ -51,8 +51,9 @@ export default function UsersList() {
                                     <i className="fa fa-search" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div className="scrollable-table">
+                            
                             <div className="table-responsive tableBG">
+                            <div className="scrollable-table">
                                 <table className="table no-wrap user-table mb-0">
                                     <thead>
                                     <tr>
