@@ -13,8 +13,8 @@ export default function RegistrationForm() {
   const mapsAPIkey = "AIzaSyD_GPKVAAKbp1teq9Juu_pWefE7bWcG7Yg";
   const [address, setAddress] = useState('');
   const [date, setDate] = useState(null);
+  const [authenticated, setAuthenticated] = useState(false);
   const [formData, setFormData] = useState({
-
     name: '',
     surname: '',
     telephoneNumber: '',

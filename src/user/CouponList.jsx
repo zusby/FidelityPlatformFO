@@ -36,8 +36,31 @@ const couponsList= () => {
         <> <Check color="green" size={30} title="The coupon is available to be used"/> </>)
     }
 
-
-
+    if (userCoupons.length === 0) {
+        return (
+            <div style={{
+                margin: 'auto',
+                width: '50%',
+                border: '3px',
+                padding: '10px'
+            }}>
+                <div className="container-fluid mt-100">
+                    <div className="col-md-12 d-flex justify-content-center align-items-center">
+                        <div className="card">
+                            <div className="card-header">
+                            </div>
+                            <div className="card-body cart">
+                                <img src="https://i.imgur.com/dCdflKN.png" width="130" height="130"
+                                     className="img-fluid mb-4 mr-3" alt="Empty Cart"/>
+                                <h3><strong>Your coupon list is empty</strong></h3>
+                                <h4> Coupons will be listed here once you'll gather some</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
     return userCoupons.map((coupon, index) => {
         console.log(coupon);
 
