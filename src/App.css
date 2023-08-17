@@ -1,44 +1,24 @@
-html{
-  background-color: rgb(45,45,45);
-  color: rgb(180, 180, 180);
-}
-
-.App {
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 5s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-.tableBG {
-  background-color: white;
-  padding-left: 3vh;
-  padding-right: 3vh;
-}
-
-@keyframes App-logo-spin {
+@keyframes logo-spin {
   from {
     transform: rotate(0deg);
   }
@@ -47,123 +27,16 @@ html{
   }
 }
 
-.nonfirst-element {
-
-  padding-top: 2vh;
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
 }
 
-.headerContainer {
-  width: 100%;
-
-}
-.headerTable {
-  background-color: rgb(45,45,45);
-  width: 100%;
-  padding-left: 3vh;
-  padding-right: 3vh;
+.card {
+  padding: 2em;
 }
 
-.homeVP :first-child{
-  text-align: left;
-  max-width: 10vh;
-  max-height: 10vh;
-  vertical-align: middle;
-}
-
-.homeVP > th:not(:first-child){
-  width: 13%;
-}
-
-#thSpacer{
-  width: 60%;
-}
-
-.user-table{
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.user-table > tbody > tr >td{
-  padding-left: 0.5vh;
-  padding-right: 0.5vh;
-  padding-bottom: 1vh;
-}
-
-.user-table > thead > tr > th{
-  padding-left: 0.5vh;
-  padding-right: 0.5vh;
-  padding-bottom: 1vh;
-  border-bottom: 2px solid rgb(150, 150, 150);
-}
-
-.user-table > tbody > tr{
-  border-bottom: 2px solid rgb(150, 150, 150);
-
-}
-
-.divSpacer{
-  height: 2vh;
-  background-color: rgb(45,45,45);
-}.nonfirst-element {
-
-   padding-top: 2vh;
- }
-
-.headerContainer {
-  width: 100%;
-
-}
-.headerTable {
-  background-color: rgb(45,45,45);
-  width: 100%;
-  padding-left: 3vh;
-  padding-right: 3vh;
-}
-
-.homeVP :first-child{
-  text-align: left;
-  max-width: 10vh;
-  max-height: 10vh;
-  vertical-align: middle;
-}
-
-.homeVP > th:not(:first-child){
-  width: 13%;
-}
-
-#thSpacer{
-  width: 60%;
-}
-
-.user-table{
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.user-table > tbody > tr >td{
-  padding-left: 0.5vh;
-  padding-right: 0.5vh;
-  padding-bottom: 1vh;
-}
-
-.user-table > thead > tr > th{
-  padding-left: 0.5vh;
-  padding-right: 0.5vh;
-  padding-bottom: 1vh;
-  border-bottom: 2px solid rgb(150, 150, 150);
-}
-
-.user-table > tbody > tr{
-  border-bottom: 2px solid rgb(150, 150, 150);
-
-}
-
-.divSpacer{
-  height: 2vh;
-  background-color: rgb(45,45,45);
-}
-
-.scrollable-table {
-  height: 700px; /* Set the desired height here */
-  overflow-y: auto;
+.read-the-docs {
+  color: #888;
 }
