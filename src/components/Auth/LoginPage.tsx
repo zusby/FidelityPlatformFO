@@ -88,7 +88,7 @@ export default function LoginPage({ className, ...props }: UserAuthFormProps) {
                                     control={form.control}
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Passwrod</FormLabel>
+                                            <FormLabel>Password</FormLabel>
                                             <FormControl>
                                                 <Input {...field} required type='password' id='password' autoComplete='password' name='password' placeholder='Insert your password' />
                                             </FormControl>

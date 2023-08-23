@@ -104,7 +104,7 @@ export function RegistrationDialog() {
 
     return (
         <Dialog>
-            <DialogTrigger asChild>
+            <DialogTrigger asChild className="">
                 <a href="#">Dont have an account? <strong> Sign Up!</strong></a>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px] max-h-screen fixed overflow-auto">

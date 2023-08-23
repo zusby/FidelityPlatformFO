@@ -59,7 +59,7 @@ class Protected extends React.Component<IProps, IState> {
         if (!this.state.logged) {
             return <LoginPage />;
         }
-        return this.props.children;
+    return this.props.children;
     }
 }
 export default Protected;
