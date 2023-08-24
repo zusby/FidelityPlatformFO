@@ -8,7 +8,9 @@ import { Mail, Phone, Trash } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z  from "zod";
-import toast from "react-hot-toast"
+import toast, { Toaster } from "react-hot-toast"
+import { useLocation, useNavigate, useParams } from "react-router";
+import { AlertModal } from "@/components/Modals/alert-modal";
 
 
 interface settingsFormProps{
@@ -70,7 +72,8 @@ export const SettingsForm:React.FC<settingsFormProps> = ({
 
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
-     
+    const navigate = useNavigate();
+    const params = useParams();
     const form = useForm<SettingsFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: initialData,
@@ -80,16 +83,25 @@ export const SettingsForm:React.FC<settingsFormProps> = ({
     const onSubmit = async (data: SettingsFormValues)=>{
         try {
             setLoading(true);
-            console.log(form.formState); // Log validation errors
-
-            console.log(data);
             fetch("http://localhost:8080/api/v1/shop/add", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(data),
-            })
+            });
+            
+            
+
+            toast.loading("Updating your Store...");
+            setTimeout(() => {
+                toast.dismiss();
+                toast.success("Store updated successfully");
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            }, 3000);
+            
             
         } catch (error) {
             toast.error("Something went wrong.");
@@ -97,9 +109,43 @@ export const SettingsForm:React.FC<settingsFormProps> = ({
             setLoading(false);
         }
     }
+
+    const onDelete = async () => {
+        try {
+            setLoading(true);
+            //TODO aggiungere 
+            /*
+            fetch(`http://localhost:8080/api/v1/shop/${params.storeID}`, {
+                method: 'DELETE',
+            });
+            */
+            toast.loading(`Deleting ${initialData.name}...`);
+
+            setTimeout(() => {
+                toast.dismiss();
+                toast.success(`${initialData.name} has been succesfully deleted`);
+                setTimeout(() => {
+                    navigate("/");
+                }, 1000);
+            }, 3000);
+
+            
+        } catch (error) {
+            toast.error("Make sure you removed all products and categories first.")
+        }finally{
+            setLoading(false);
+            setOpen(false);
+        }
+    }
  
     return (
         <>
+            <AlertModal 
+            isOpen={open}
+            onClose={()=> setOpen(false)}
+            onConfirm={onDelete}
+            loading={loading}
+            />
             <div className="flex items-center justify-between">
                 <Heading
                 title="Settings"
@@ -191,6 +237,7 @@ export const SettingsForm:React.FC<settingsFormProps> = ({
 
                 </form>
             </Form>
+            <Toaster/>
         </>
     );
 };
