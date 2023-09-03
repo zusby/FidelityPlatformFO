@@ -15,10 +15,15 @@ export default function MainNav({
          active : pathName.pathname === `/${params.storeID}`    
         },
         {
-         href:`/${params.storeID}/settings`,
-         label: 'Settings',
-         active : pathName.pathname === `/${params.storeID}/settings`    
+         href:`/${params.storeID}/billBoards`,
+         label: 'BillBoard',
+         active : pathName.pathname === `/${params.storeID}/billBoard`    
         },
+        {
+            href:`/${params.storeID}/settings`,
+            label: 'Settings',
+            active : pathName.pathname === `/${params.storeID}/settings`    
+           },
     ];
      
     

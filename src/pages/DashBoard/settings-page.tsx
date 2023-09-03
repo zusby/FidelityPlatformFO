@@ -11,6 +11,7 @@ const SettingsPage =()=>{
     const { storeID } = useParams();
     const[store, setStore] = useState<Store|null>(null);
     const[loading, setLoading] = useState(true);
+    
     async function getStores(storeID:string) {
         const result = await fetch(`http://localhost:8080/api/v1/shop/${storeID}`)
           .then((response) => response.json())

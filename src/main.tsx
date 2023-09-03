@@ -10,23 +10,21 @@ import DashBoardPage from './pages/DashBoard/dashboard-page';
 import Protected from './components/Auth/Protected';
 import ErrorPage from './pages/ErrorPage';
 import SettingsPage from './pages/DashBoard/settings-page';
+import BillBoardsPage from './pages/BillBoard/billboards';
 
 
 
 const router = createBrowserRouter([
-
+  //HOME
   {
     path: "/",
     element: (
     <Protected><SetupLayout children={<App />}/></Protected>),
-    errorElement:<ErrorPage/>,
+    errorElement:<ErrorPage errorTitle='Page not found' errorMessage='The page you were looking for doesnt exist or got moved'/>,
       
   },
+  //login routes
   {
-    
-  },
-  {
-
     path: "sign-in",
     element: <LoginPage />,
   },
@@ -35,6 +33,7 @@ const router = createBrowserRouter([
     path: "sign-up",
     element: <LoginPage />
   },
+  //Store routes
   {
     path:':storeID',
     element: (
@@ -49,6 +48,14 @@ const router = createBrowserRouter([
     <Protected>
         <SettingsPage/>
       </Protected>)
+  },
+  {
+    path:":storeID/billboards",
+    element: (
+    <Protected>
+      <BillBoardsPage/>
+    </Protected>
+    )
   }
 ]);
 
