@@ -7,14 +7,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Mail, Phone, Trash } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import * as z  from "zod";
+import * as z from "zod";
 import toast, { Toaster } from "react-hot-toast"
 import { useNavigate, useParams } from "react-router";
 import { AlertModal } from "@/components/Modals/alert-modal";
 
 
-interface settingsFormProps{
-    initialData:Store
+interface settingsFormProps {
+    initialData: Store
 }
 
 const formSchema = z.object({
@@ -66,9 +66,9 @@ const formSchema = z.object({
 
 type SettingsFormValues = z.infer<typeof formSchema>;
 
-export const SettingsForm:React.FC<settingsFormProps> = ({
+export const SettingsForm: React.FC<settingsFormProps> = ({
     initialData
-})=>{
+}) => {
 
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -77,10 +77,10 @@ export const SettingsForm:React.FC<settingsFormProps> = ({
     const form = useForm<SettingsFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: initialData,
-    
+
     })
 
-    const onSubmit = async (data: SettingsFormValues)=>{
+    const onSubmit = async (data: SettingsFormValues) => {
         try {
             setLoading(true);
             fetch("http://localhost:8080/api/v1/shop/add", {
@@ -90,8 +90,8 @@ export const SettingsForm:React.FC<settingsFormProps> = ({
                 },
                 body: JSON.stringify(data),
             });
-            
-            
+
+
 
             toast.loading("Updating your Store...");
             setTimeout(() => {
@@ -101,11 +101,11 @@ export const SettingsForm:React.FC<settingsFormProps> = ({
                     window.location.reload();
                 }, 1000);
             }, 3000);
-            
-            
+
+
         } catch (error) {
             toast.error("Something went wrong.");
-        }finally{
+        } finally {
             setLoading(false);
         }
     }
@@ -114,11 +114,11 @@ export const SettingsForm:React.FC<settingsFormProps> = ({
         try {
             setLoading(true);
             //TODO aggiungere 
-            /*
+
             fetch(`http://localhost:8080/api/v1/shop/${params.storeID}`, {
                 method: 'DELETE',
             });
-            */
+
             toast.loading(`Deleting ${initialData.name}...`);
 
             setTimeout(() => {
@@ -129,115 +129,116 @@ export const SettingsForm:React.FC<settingsFormProps> = ({
                 }, 1000);
             }, 3000);
 
-            
+
         } catch (error) {
             toast.error("Make sure you removed all products and categories first.")
-        }finally{
+        } finally {
             setLoading(false);
             setOpen(false);
         }
     }
- 
+
     return (
         <>
-            <AlertModal 
-            isOpen={open}
-            onClose={()=> setOpen(false)}
-            onConfirm={onDelete}
-            loading={loading}
+            <AlertModal
+                isOpen={open}
+                onClose={() => setOpen(false)}
+                onConfirm={onDelete}
+                loading={loading}
             />
             <div className="flex items-center justify-between">
                 <Heading
-                title="Settings"
-                description="Manage store preferences"
+                    title="Settings"
+                    description="Manage store preferences"
                 />
-                <Button 
-                disabled={loading}
-                variant="destructive"
-                size="icon"
-                onClick={()=>setOpen(true)}
+
+                <Button
+                    disabled={loading}
+                    variant="destructive"
+                    size="icon"
+                    onClick={() => setOpen(true)}
                 >
-                    <Trash className="h-4 w-4"/>
+                    <Trash className="h-4 w-4" />
                 </Button>
             </div>
-            <Separator /> 
+            <Separator />
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
                     <div className="grid grid-cols-1 gap-8 w-1/4">
-                         <FormField
-                         control={form.control}
-                         name="name"
-                         render={({ field })=>(
-                            <FormItem>
-                                <FormLabel > Name</FormLabel>
-                                <FormControl>
-                                    <Input disabled={loading}  {...field}/>
-                                </FormControl>
-                                <FormDescription>
+                        <FormField
+                            control={form.control}
+                            name="name"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel > Name</FormLabel>
+                                    <FormControl>
+                                        <Input disabled={loading}  {...field} />
+                                    </FormControl>
+                                    <FormDescription>
                                         The name that will be displayed of your Store
                                     </FormDescription>
-                                <FormMessage/>
-                            </FormItem>
-                         )}
-                         />
-                         
-                         <FormField
-                         control={form.control}
-                         name="space.email"
-                         render={({ field })=>(
-                            <FormItem>
-                                
-                                <FormLabel className="flex items-center gap-1"> 
-                                <Mail size={20}/> Email
-                                </FormLabel>
-                                
-                                <FormControl>
-                                    
-                                    <Input disabled={loading}  {...field}/>
-                                </FormControl>
-                                <FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="space.email"
+                            render={({ field }) => (
+                                <FormItem>
+
+                                    <FormLabel className="flex items-center gap-1">
+                                        <Mail size={20} /> Email
+                                    </FormLabel>
+
+                                    <FormControl>
+
+                                        <Input disabled={loading}  {...field} />
+                                    </FormControl>
+                                    <FormDescription>
                                         The Email used to contact your store
                                     </FormDescription>
-                                <FormMessage/>
-                            </FormItem>
-                         )}
-                         />
-                         <FormField
-                         control={form.control}
-                         name="vatNumber"
-                         render={({ field })=>(
-                            <FormItem>
-                                <FormLabel> VAT Number</FormLabel>
-                                <FormControl>
-                                    <Input disabled={loading}  {...field}/>
-                                </FormControl>
-                                <FormMessage/>
-                            </FormItem>
-                         )}
-                         />
-                         <FormField
-                         control={form.control}
-                         name="space.shopTelephoneNumber"
-                         render={({ field })=>(
-                            <FormItem>
-                                <FormLabel className=" flex items-center gap-1">
-                                    <Phone size={20}/>  Telephone Number</FormLabel>
-                                <FormControl>
-                                    <Input disabled={loading}  {...field}/>
-                                </FormControl>
-                                <FormMessage/>
-                            </FormItem>
-                         )}
-                         />
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="vatNumber"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel> VAT Number</FormLabel>
+                                    <FormControl>
+                                        <Input disabled={loading}  {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="space.shopTelephoneNumber"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel className=" flex items-center gap-1">
+                                        <Phone size={20} />  Telephone Number</FormLabel>
+                                    <FormControl>
+                                        <Input disabled={loading}  {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
 
                     </div>
                     <Button disabled={loading} className="ml-auto" type="submit"  >
-                    Save Changes    
+                        Save Changes
                     </Button>
 
                 </form>
             </Form>
-            <Toaster/>
+            <Toaster />
         </>
     );
 };

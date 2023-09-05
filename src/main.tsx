@@ -11,6 +11,7 @@ import Protected from './components/Auth/Protected';
 import ErrorPage from './pages/ErrorPage';
 import SettingsPage from './pages/DashBoard/settings-page';
 import BillBoardsPage from './pages/BillBoard/billboards';
+import { BillBoardPage } from './pages/BillBoard/billboard';
 
 
 
@@ -19,9 +20,9 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: (
-    <Protected><SetupLayout children={<App />}/></Protected>),
-    errorElement:<ErrorPage errorTitle='Page not found' errorMessage='The page you were looking for doesnt exist or got moved'/>,
-      
+      <Protected><SetupLayout children={<App />} /></Protected>),
+    errorElement: <ErrorPage errorTitle='Page not found' errorMessage='The page you were looking for doesnt exist or got moved' />,
+
   },
   //login routes
   {
@@ -35,28 +36,37 @@ const router = createBrowserRouter([
   },
   //Store routes
   {
-    path:':storeID',
+    path: ':storeID',
     element: (
       <Protected>
-    <DashBoardLayout children={<DashBoardPage/>}/>
-    </Protected>
+        <DashBoardLayout children={<DashBoardPage />} />
+      </Protected>
     ),
   },
   {
     path: ":storeID/settings",
     element: (
-    <Protected>
-        <SettingsPage/>
+      <Protected>
+        <SettingsPage />
       </Protected>)
   },
   {
-    path:":storeID/billboards",
+    path: ":storeID/billboards",
     element: (
-    <Protected>
-      <BillBoardsPage/>
-    </Protected>
+      <Protected>
+        <BillBoardsPage />
+      </Protected>
+    )
+  },
+  {
+    path: ":storeID/billboards/:billboardID",
+    element: (
+      <Protected>
+        <BillBoardPage />
+      </Protected>
     )
   }
+
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
