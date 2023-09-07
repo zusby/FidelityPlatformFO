@@ -1,13 +1,15 @@
 
 import Navbar from "@/components/Navbar"
-import { BillBoardClient } from "./components/client";
+
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Auth } from "@/lib/FireBase";
-import { BillBoardColumn } from "./columns";
+
 import { format} from "date-fns"
-const BillBoardsPage = () => {
+import { CategoryColumn } from "./columns";
+import { CategoryClient } from "./components/client";
+const CategoriesPage = () => {
 
 
     const params = useParams();
@@ -15,26 +17,27 @@ const BillBoardsPage = () => {
     const [loading, setLoading] = useState(false);
     const baseURL = "http://localhost:8080/api/v1/";
 
-    const [billBoards, setBillBoards] = useState<BillBoard[]>([]);
+    const [categories, setCategories] = useState<Category[]>([]);
 
 
     useEffect(() => {
         if (user) {
             setLoading(true);
-            fetch(baseURL + `billboard/${params.storeID}/all`)
+            fetch(baseURL + `category/${params.storeID}/all`)
 
                 .then((res) => { if (res.ok) return res.json(); return null })
-                .then((data) => setBillBoards(data))
+                .then((data) => setCategories(data))
                 .finally(() => setLoading(false))
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [params.storeID]);
 
 
-    const formattedBillboards: BillBoardColumn[] = billBoards
+    const formattedCategories: CategoryColumn[] = categories
     .map((item)=>({
         id:item.id,
-        label:item.label,
+        name:item.name,
+        billboardLabel:item.billboard.label,
         createdAt: format(new Date(item.createdAt),'dd/MM/yyyy'),
     }))
     
@@ -47,7 +50,7 @@ const BillBoardsPage = () => {
 
                 <div className="flex-col">
                     <div className="flex-1 space-y-4 p-8 pt-6">
-                        <BillBoardClient data={formattedBillboards} />
+                        <CategoryClient data={formattedCategories} />
 
                     </div>
                 </div>
@@ -56,4 +59,4 @@ const BillBoardsPage = () => {
     }
 }
 
-export default BillBoardsPage
+export default CategoriesPage

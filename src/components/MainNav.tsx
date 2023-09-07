@@ -24,6 +24,11 @@ export default function MainNav({
             label: 'Settings',
             active: pathName.pathname === `/${params.storeID}/settings`
         },
+        {
+            href: `/${params.storeID}/category`,
+            label: 'Categories',
+            active: pathName.pathname === `/${params.storeID}/category`
+        },
     ];
 
 

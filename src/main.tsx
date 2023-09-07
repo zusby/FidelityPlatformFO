@@ -12,6 +12,8 @@ import ErrorPage from './pages/ErrorPage';
 import SettingsPage from './pages/DashBoard/settings-page';
 import BillBoardsPage from './pages/BillBoard/billboards';
 import { BillBoardPage } from './pages/BillBoard/billboard';
+import CategoriesPage from './pages/Categories/categories';
+import { CategoryPage } from './pages/Categories/category';
 
 
 
@@ -63,6 +65,22 @@ const router = createBrowserRouter([
     element: (
       <Protected>
         <BillBoardPage />
+      </Protected>
+    )
+  },
+  {
+    path: ":storeID/category",
+    element: (
+      <Protected>
+        <CategoriesPage/>
+      </Protected>
+    )
+  },
+  {
+    path: ":storeID/category/:categoryID",
+    element: (
+      <Protected>
+        <CategoryPage/>
       </Protected>
     )
   }
