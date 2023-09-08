@@ -2,25 +2,25 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { CategoryColumn } from "./columns";
 import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { useNavigate, useParams } from "react-router";
 import { useState } from "react";
 import { AlertModal } from "@/components/Modals/alert-modal";
 
 
-interface CellActionProps{
+interface CellActionProps {
     data: CategoryColumn
 }
 
 
-export const CellAction:React.FC<CellActionProps> = ({
+export const CellAction: React.FC<CellActionProps> = ({
     data
 }) => {
     const navigate = useNavigate();
     const params = useParams();
-    const[loading, setLoading] = useState(false);
-    const[open, setOpen] = useState(false);
-    const onCopy = (id:string) =>{
+    const [loading, setLoading] = useState(false);
+    const [open, setOpen] = useState(false);
+    const onCopy = (id: string) => {
         navigator.clipboard.writeText(id);
         toast.success("Billboard ID copied to clipboard")
     }
@@ -29,11 +29,11 @@ export const CellAction:React.FC<CellActionProps> = ({
     const onDelete = async () => {
         try {
             setLoading(true);
+            console.log(data.id);
 
-            await fetch(`http://localhost:8080/api/v1/billboard/${params.storeID}/${data.id}/delete`, {
+            fetch(`http://localhost:8080/api/v1/category/${params.storeID}/${data.id}/delete`, {
                 method: 'DELETE',
             });
-
             toast.loading(`Deleting ${data.name}...`);
 
             setTimeout(() => {
@@ -54,31 +54,33 @@ export const CellAction:React.FC<CellActionProps> = ({
     }
 
 
-    return(
+
+
+    return (
         <>
-            <AlertModal isOpen={open} onClose={()=> setOpen(false)} onConfirm={onDelete} loading={loading}/>
+            <AlertModal isOpen={open} onClose={() => setOpen(false)} onConfirm={onDelete} loading={loading} />
             <DropdownMenu>
-                <Toaster/>
+
                 <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="h-8 w-8 p-0">
                         <span className="sr-only"></span>
-                        <MoreHorizontal className="h-4 w-4"/>
+                        <MoreHorizontal className="h-4 w-4" />
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                     <DropdownMenuLabel>
                         Actions
                     </DropdownMenuLabel>
-                    <DropdownMenuItem onClick={()=> onCopy(data.id)}>
-                        <Copy className="mr-2 h-4 w-4"/>
+                    <DropdownMenuItem onClick={() => onCopy(data.id)}>
+                        <Copy className="mr-2 h-4 w-4" />
                         Copy ID
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={()=> navigate(`/${params.storeID}/billBoards/${data.id}`)}>
-                        <Edit className="mr-2 h-4 w-4"/>
+                    <DropdownMenuItem onClick={() => navigate(`/${params.storeID}/category/${data.id}`)}>
+                        <Edit className="mr-2 h-4 w-4" />
                         Update
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={()=> setOpen(true)}>
-                        <Trash className="mr-2 h-4 w-4"/>
+                    <DropdownMenuItem onClick={() => setOpen(true)}>
+                        <Trash className="mr-2 h-4 w-4" />
                         Delete
                     </DropdownMenuItem>
                 </DropdownMenuContent>

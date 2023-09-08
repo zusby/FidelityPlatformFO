@@ -21,11 +21,19 @@ interface CategoryFormProps {
 
 const formSchema = z.object({
     name: z.string().min(1),
-    billboardID: z.string().min(1, "You must add a background image"),
+    billboard: z.object({
+        id: z.string().min(1),
+        storeID: z.string().min(1),
+        label: z.string().min(1),
+        imageUrl: z.string().min(1),
+        createdAt: z.optional(z.unknown()),
+        updatedAt: z.optional(z.unknown()),
+    }),
+    id: z.string().min(1),
     storeID: z.string().min(1),
     updatedAt: z.optional(z.unknown()),
     createdAt: z.optional(z.unknown()),
-    
+
 })
 
 
@@ -47,22 +55,19 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
     //  const toastMessage = initialData ? "category uptaded" : "category created.";
     const action = initialData ? "Save Changes" : "Create category";
 
-    console.log(initialData);
     const form = useForm<CategoryFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: initialData || {
             name: '',
-            billboardID: '',
+            billboard: {},
             storeID: params.storeID,
         },
     })
 
     const onSubmit = async (data: CategoryFormValues) => {
         try {
-            setLoading(true);
-
+            setLoading(true)
             console.log(data);
-
             fetch("http://localhost:8080/api/v1/category/add", {
                 method: 'POST',
                 headers: {
@@ -92,10 +97,9 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
         }
     }
 
-    const onDelete = async () => {
+    const onDelete = () => {
         try {
             setLoading(true);
-
             fetch(`http://localhost:8080/api/v1/category/${params.storeID}/${params.categoryID}/delete`, {
                 method: 'DELETE',
             });
@@ -106,7 +110,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
                 toast.dismiss();
                 toast.success(`${initialData?.name} has been succesfully deleted`);
                 setTimeout(() => {
-                    navigate(0);
+                    navigate(`/${params.storeID}/category`);
                 }, 1000);
             }, 3000);
 
@@ -139,7 +143,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
                         disabled={loading}
                         variant="destructive"
                         size="icon"
-                        onClick={() => console.log(initialData)}
+                        onClick={() => setOpen(true)}
                     >
                         <Trash className="h-4 w-4" />
                     </Button>
@@ -152,7 +156,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
 
-                
+
 
                     <div className="grid grid-cols-3 gap-8 ">
 
@@ -169,27 +173,37 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
                                 </FormItem>
                             )}
                         />
-                         <FormField
+                        <FormField
                             control={form.control}
-                            name="billboardID"
+                            name="billboard"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Billboard</FormLabel>
-                                    
-                                        <Select disabled={loading} onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
-                                            <FormControl>
-                                                <SelectTrigger>
-                                                    <SelectValue defaultValue={field.value} placeholder="Select a billboard"/>
-                                                </SelectTrigger>
-                                            </FormControl>
-                                            <SelectContent>
-                                                {billboards.map((billboard)=>(
-                                                    <SelectItem key={billboard.id} value={billboard.id}>
-                                                        {billboard.label}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
+
+                                    <Select
+                                        disabled={loading}
+                                        onValueChange={(selectedBillboardId) => {
+                                            const selectedBillboard = billboards.find((billboard) => billboard.id === selectedBillboardId);
+                                            if (selectedBillboard) {
+                                                form.setValue('billboard', selectedBillboard);
+                                            }
+                                        }}
+                                        value={field.value.id}
+                                        defaultValue={field.value.id}
+                                    >
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue defaultValue={field.value.id} placeholder="Select a billboard" />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            {billboards.map((billboard) => (
+                                                <SelectItem key={billboard.id} value={billboard.id}>
+                                                    {billboard.label}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
                                     <FormMessage />
                                 </FormItem>
                             )}
