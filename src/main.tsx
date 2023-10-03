@@ -14,6 +14,13 @@ import BillBoardsPage from './pages/BillBoard/billboards';
 import { BillBoardPage } from './pages/BillBoard/billboard';
 import CategoriesPage from './pages/Categories/categories';
 import { CategoryPage } from './pages/Categories/category';
+import SizesPage from './pages/Sizes/sizes';
+import { SizePage } from './pages/Sizes/size';
+import ColorsPage from './pages/Colors/colors';
+import { ColorPage } from './pages/Colors/color';
+import { ProductsPage } from './pages/Products/Products';
+import { ProductPage } from './pages/Products/Product';
+import { ThemeProvider } from './dark-mone';
 
 
 
@@ -72,7 +79,7 @@ const router = createBrowserRouter([
     path: ":storeID/category",
     element: (
       <Protected>
-        <CategoriesPage/>
+        <CategoriesPage />
       </Protected>
     )
   },
@@ -80,16 +87,65 @@ const router = createBrowserRouter([
     path: ":storeID/category/:categoryID",
     element: (
       <Protected>
-        <CategoryPage/>
+        <CategoryPage />
       </Protected>
     )
-  }
+  },
+  {
+    path: ":storeID/sizes",
+    element: (
+      <Protected>
+        <SizesPage />
+      </Protected>
+    )
+  },
+  {
+    path: ":storeID/sizes/:sizeID",
+    element: (
+      <Protected>
+        <SizePage />
+      </Protected>
+    )
+  },
+  {
+    path: ":storeID/colors",
+    element: (
+      <Protected>
+        <ColorsPage />
+      </Protected>
+    )
+  },
+  {
+    path: ":storeID/colors/:colorID",
+    element: (
+      <Protected>
+        <ColorPage />
+      </Protected>
+    )
+  },
+  {
+    path: ":storeID/products",
+    element: (
+      <Protected>
+        <ProductsPage />
+      </Protected>
+    )
+  },
+  {
+    path: ":storeID/products/:productID",
+    element: (
+      <Protected>
+        <ProductPage />
+      </Protected>
+    )
+  },
 
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-
-    <RouterProvider router={router} />
+    <ThemeProvider defaultTheme='light' storageKey="vite-ui-theme">
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </React.StrictMode>,
 )

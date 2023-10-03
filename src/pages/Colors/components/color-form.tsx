@@ -8,28 +8,19 @@ import { Trash } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import toast from "react-hot-toast"
+import { Toaster, toast } from "react-hot-toast"
 import { useNavigate, useParams } from "react-router";
 import { AlertModal } from "@/components/Modals/alert-modal";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
+interface ColorFormProps {
+    initialData: Color | null;
 
-interface CategoryFormProps {
-    initialData: Category | null;
-    billboards: BillBoard[];
 }
 
 const formSchema = z.object({
     name: z.string().min(1),
-    billboard: z.object({
-        id: z.string().min(1),
-        storeID: z.string().min(1),
-        label: z.string().min(1),
-        imageUrl: z.string().min(1),
-        createdAt: z.optional(z.unknown()),
-        updatedAt: z.optional(z.unknown()),
-    }),
-    storeID: z.string().min(1),
+    value: z.string().min(4),
+    storeID: z.string(),
     updatedAt: z.optional(z.unknown()),
     createdAt: z.optional(z.unknown()),
 
@@ -37,37 +28,35 @@ const formSchema = z.object({
 
 
 
-type CategoryFormValues = z.infer<typeof formSchema>;
+type ColorFormValues = z.infer<typeof formSchema>;
 
-export const CategoryForm: React.FC<CategoryFormProps> = ({
+export const ColorForm: React.FC<ColorFormProps> = ({
     initialData,
-    billboards
-}) => {
 
+}) => {
 
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const params = useParams();
-    const title = initialData ? "Edit category" : "Create category";
-    const description = initialData ? "Edit category" : "Add a new category";
-    //  const toastMessage = initialData ? "category uptaded" : "category created.";
-    const action = initialData ? "Save Changes" : "Create category";
+    const title = initialData ? "Edit color" : "Create color";
+    const description = initialData ? "Edit color" : "Add a new color";
+    //  const toastMessage = initialData ? "color uptaded" : "color created.";
+    const action = initialData ? "Save Changes" : "Create color";
 
-    const form = useForm<CategoryFormValues>({
+    const form = useForm<ColorFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: initialData || {
             name: '',
-            billboard: {},
+            value: '',
             storeID: params.storeID,
         },
     })
 
-    const onSubmit = async (data: CategoryFormValues) => {
+    const onSubmit = async (data: ColorFormValues) => {
         try {
             setLoading(true)
-            console.log(data);
-            fetch("http://localhost:8080/api/v1/category/add", {
+            fetch("http://localhost:8080/api/v1/color/add", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -78,14 +67,14 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
 
 
 
-            toast.loading("Updating your category...");
+            toast.loading("Updating your color...");
             setTimeout(() => {
                 toast.dismiss();
 
                 setTimeout(() => {
-                    toast.success("category updated successfully");
+                    toast.success("color updated successfully");
                     setTimeout(() => {
-                        navigate(`/${params.storeID}/category`)
+                        navigate(`/${params.storeID}/colors`)
                     }, 1000);
                 }, 1000);
             }, 3000);
@@ -99,7 +88,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
     const onDelete = () => {
         try {
             setLoading(true);
-            fetch(`http://localhost:8080/api/v1/category/${params.storeID}/${params.categoryID}/delete`, {
+            fetch(`http://localhost:8080/api/v1/color/${params.storeID}/${params.colorID}/delete`, {
                 method: 'DELETE',
             });
 
@@ -109,13 +98,13 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
                 toast.dismiss();
                 toast.success(`${initialData?.name} has been succesfully deleted`);
                 setTimeout(() => {
-                    navigate(`/${params.storeID}/category`);
+                    navigate(`/${params.storeID}/colors`);
                 }, 1000);
             }, 3000);
 
 
         } catch (error) {
-            toast.error("Make sure you removed products that use this category first.")
+            toast.error("Make sure you removed products that use this color first.")
         } finally {
             setLoading(false);
             setOpen(false);
@@ -141,7 +130,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
                     <Button
                         disabled={loading}
                         variant="destructive"
-                        size="icon"
+                        color="icon"
                         onClick={() => setOpen(true)}
                     >
                         <Trash className="h-4 w-4" />
@@ -150,6 +139,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
 
             </div>
             <Separator />
+            <Toaster />
 
 
             <Form {...form}>
@@ -166,7 +156,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
                                 <FormItem>
                                     <FormLabel>Name</FormLabel>
                                     <FormControl>
-                                        <Input disabled={loading} placeholder="Category name" {...field} />
+                                        <Input disabled={loading} placeholder="Color name" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -174,39 +164,23 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
                         />
                         <FormField
                             control={form.control}
-                            name="billboard"
+                            name="value"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Billboard</FormLabel>
+                                    <FormLabel>Name</FormLabel>
+                                    <FormControl>
+                                        <div className="flex items-center gap-x-4">
+                                            <Input disabled={loading} placeholder="#000" {...field} />
+                                            <div className="p-3 rounded-full" style={{ backgroundColor: field.value, boxShadow: 'none', border: '1px solid transparent' }} ></div>
 
-                                    <Select
-                                        disabled={loading}
-                                        onValueChange={(selectedBillboardId) => {
-                                            const selectedBillboard = billboards.find((billboard) => billboard.id === selectedBillboardId);
-                                            if (selectedBillboard) {
-                                                form.setValue('billboard', selectedBillboard);
-                                            }
-                                        }}
-                                        value={field.value.id}
-                                        defaultValue={field.value.id}
-                                    >
-                                        <FormControl>
-                                            <SelectTrigger>
-                                                <SelectValue defaultValue={field.value.id} placeholder="Select a billboard" />
-                                            </SelectTrigger>
-                                        </FormControl>
-                                        <SelectContent>
-                                            {billboards.map((billboard) => (
-                                                <SelectItem key={billboard.id} value={billboard.id}>
-                                                    {billboard.label}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
+                                        </div>
+                                    </FormControl>
+
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
+
 
 
                     </div>

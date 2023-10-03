@@ -19,15 +19,36 @@ export default function MainNav({
             label: 'BillBoards',
             active: pathName.pathname === `/${params.storeID}/billBoards`
         },
-        {
-            href: `/${params.storeID}/settings`,
-            label: 'Settings',
-            active: pathName.pathname === `/${params.storeID}/settings`
-        },
+
         {
             href: `/${params.storeID}/category`,
             label: 'Categories',
             active: pathName.pathname === `/${params.storeID}/category`
+        },
+        {
+            href: `/${params.storeID}/sizes`,
+            label: 'Sizes',
+            active: pathName.pathname === `/${params.storeID}/sizes`
+        },
+        {
+            href: `/${params.storeID}/colors`,
+            label: 'Colors',
+            active: pathName.pathname === `/${params.storeID}/colors`
+        },
+        {
+            href: `/${params.storeID}/products`,
+            label: 'Products',
+            active: pathName.pathname === `/${params.storeID}/products`
+        },
+        {
+            href: `/${params.storeID}/orders`,
+            label: 'Orders',
+            active: pathName.pathname === `/${params.storeID}/orders`
+        },
+        {
+            href: `/${params.storeID}/settings`,
+            label: 'Settings',
+            active: pathName.pathname === `/${params.storeID}/settings`
         },
     ];
 
@@ -35,6 +56,7 @@ export default function MainNav({
     return (
         <nav
             className={cn("flex items-center space-x-4 lg:space-x-4", className)}
+            {...props}
         >
             {routes.map((route) => (
                 <Link

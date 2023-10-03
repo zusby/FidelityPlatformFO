@@ -2,50 +2,38 @@ import Navbar from "@/components/Navbar"
 import { Auth } from "@/lib/FireBase";
 import { useEffect, useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth";
-import { CategoryForm } from "./components/category-form";
+import { SizeForm } from "./components/size-form";
 import { useParams } from "react-router";
 
 
 
-export const CategoryPage = () => {
+export const SizePage = () => {
 
-    const [loading, setLoading] = useState(false);
-    const [category, setCategory] = useState<Category | null>(null);
     const params = useParams();
-    const baseURL = "http://localhost:8080/api/v1/";
     const [user] = useAuthState(Auth);
-    const [billBoards, setBillBoards] = useState<BillBoard[]>([]);
+    const [loading, setLoading] = useState(false);
+    const baseURL = "http://localhost:8080/api/v1/";
+    const [size, setSize] = useState<Size | null>(null);
 
     useEffect(() => {
         if (user) {
             setLoading(true);
-            fetch(baseURL + `category/${params.categoryID}`)
+            fetch(baseURL + `size/${params.sizeID}`)
 
                 .then((res) => { if (res.ok) return res.json(); return null })
                 .then((data) => {
-                    setCategory(data);
+                    setSize(data);
                 })
-                .catch((error) => {
-                    console.error("could not find Store:", error);
-                    setCategory(null);
+                .catch(() => {
+                    setSize(null);
                 })
                 .finally(() => setLoading(false));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [params.CategoryID]);
+    }, [params.sizeID]);
 
 
-    useEffect(() => {
-        if (user) {
-            setLoading(true);
-            fetch(baseURL + `billboard/${params.storeID}/all`)
 
-                .then((res) => { if (res.ok) return res.json(); return null })
-                .then((data) => setBillBoards(data))
-                .finally(() => setLoading(false))
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [params.storeID]);
 
 
 
@@ -61,13 +49,10 @@ export const CategoryPage = () => {
     } else {
         return (
             <>
-
                 <Navbar />
                 <div className="flex-col">
                     <div className="flex-11 space-y-4 p-8 pt-6">
-
-                        <CategoryForm initialData={category} billboards={billBoards} />
-
+                        <SizeForm initialData={size} />
                     </div>
                 </div>
             </>

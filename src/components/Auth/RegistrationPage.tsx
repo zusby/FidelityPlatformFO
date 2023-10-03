@@ -10,7 +10,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
-import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
+
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
@@ -24,7 +24,7 @@ import { Auth } from "@/lib/FireBase";
 import { useNavigate } from "react-router";
 
 export function RegistrationDialog() {
-    const mapsAPIkey = "AIzaSyD_GPKVAAKbp1teq9Juu_pWefE7bWcG7Yg";
+
     const [address, setAddress] = useState();
     const navigate = useNavigate();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -167,7 +167,6 @@ export function RegistrationDialog() {
                                                     dayPlaceholder="1"
                                                     monthPlaceholder="1"
                                                     value={field.value}
-                                                    onChange={handleValueChange}
 
 
                                                     className="w-full"
@@ -177,34 +176,17 @@ export function RegistrationDialog() {
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>)}
-                            />
-                            <FormField name='address.street'
+                            /> <FormField name='address.street'
                                 control={form.control}
-                                render={(field) => (
+                                render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Address:</FormLabel>
+                                        <FormLabel>Address</FormLabel>
                                         <FormControl>
-
-                                            <GooglePlacesAutocomplete
-                                                {...field}
-
-                                                selectProps={{
-                                                    id: 'address',
-                                                    name: 'address',
-                                                    className: 'autocomplete',
-                                                    placeholder: 'via roma 1',
-                                                    value: address,
-                                                    onChange: handleValueChange
-
-                                                }}
-                                                apiOptions={{ language: 'it', region: 'it' }}
-                                                apiKey={mapsAPIkey}
-                                            />
-
-
+                                            <Input {...field} required id='street' autoComplete='street' name='street' placeholder='piazza garibaldi 3' />
                                         </FormControl>
                                         <FormMessage />
-                                    </FormItem>)} />
+                                    </FormItem>)}
+                            />
                             <FormField name='address.zipCode'
                                 control={form.control}
                                 render={({ field }) => (

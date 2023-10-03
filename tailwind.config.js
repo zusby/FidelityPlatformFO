@@ -1,3 +1,4 @@
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
@@ -8,6 +9,8 @@ module.exports = {
     './src/**/*.{ts,tsx}',
 	],
   theme: {
+    
+
     container: {
       center: true,
       padding: "2rem",
