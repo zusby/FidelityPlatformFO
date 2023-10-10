@@ -18,7 +18,7 @@ const CloudinaryUploadWidget: React.FC<CloudinaryUploadWidgetProps> = ({
 
 
   useEffect(() => {
-    const cloudName = "durpaps2k"; // replace with your own cloud name
+    const cloudName = "durpaps2k";
 
     //@ts-expect-error cloudinary error
     const myWidget = window.cloudinary.createUploadWidget(
@@ -29,16 +29,17 @@ const CloudinaryUploadWidget: React.FC<CloudinaryUploadWidgetProps> = ({
       },
       (error: unknown, result: { event: string; info: { secure_url: string } }) => {
         if (!error && result && result.event === "success") {
-          console.log("Done! Here is the image info: ", result.info);
+
           document?.getElementById("uploadedimage")?.setAttribute("src", result.info.secure_url);
-          onUpload(result); // Call the onUpload function with the result
+          onUpload(result);
+          myWidget.close();
         }
       }
     );
 
     const buttonElement = document.getElementById("upload_widget");
 
-    // Remove existing event listeners before adding a new one
+
     buttonElement?.removeEventListener("click", openWidget);
 
     function openWidget() {
@@ -48,13 +49,12 @@ const CloudinaryUploadWidget: React.FC<CloudinaryUploadWidgetProps> = ({
     buttonElement?.addEventListener("click", openWidget, false);
 
     return () => {
-      // Clean up the event listener when the component unmounts
       buttonElement?.removeEventListener("click", openWidget);
     };
   }, [onUpload, uploadPreset]);
 
   return (
-    <Button id="upload_widget" className="sticky" disabled={disabled} variant="secondary" >
+    <Button id="upload_widget" className="sticky" disabled={disabled} variant="secondary" onClick={(event) => { event.preventDefault() }}>
       <ImagePlus className="h-4 w-4 mr-2" />
       Upload an Image
     </Button>

@@ -6,6 +6,7 @@ import { Auth } from '@/lib/FireBase';
 import { Progress } from '../ui/progress';
 import LoginPage from './LoginPage';
 
+
 interface IProps {
     children: React.ReactNode
 }
@@ -19,6 +20,7 @@ interface IState {
 
 class Protected extends React.Component<IProps, IState> {
     removeListener: any;
+
 
     constructor(props: IProps) {
         super(props);
@@ -56,10 +58,11 @@ class Protected extends React.Component<IProps, IState> {
                     </Progress>
                 </>);
         }
+
         if (!this.state.logged) {
-            return <LoginPage />;
+            return <LoginPage />
         }
-    return this.props.children;
+        return this.props.children;
     }
 }
 export default Protected;

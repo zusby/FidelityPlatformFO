@@ -1,8 +1,8 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Menubar, MenubarMenu, MenubarTrigger, MenubarContent, MenubarItem, MenubarSeparator } from "../ui/menubar";
 import { Auth } from "@/lib/FireBase";
 
-async function getUserProfile(userID:string) {
+async function getUserProfile(userID: string) {
   const result = await fetch(`http://localhost:8080/api/v1/customer/${userID}`)
     .then((response) => response.json())
     .catch((error) => console.log(error));
@@ -10,7 +10,7 @@ async function getUserProfile(userID:string) {
 }
 
 const Profilenavbar = () => {
-  const [userData, setUserData] = useState<UserProfile|null>(); // State to hold user data
+  const [userData, setUserData] = useState<UserProfile | null>();
   const user = Auth.currentUser;
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const Profilenavbar = () => {
     }
   }, [user]);
 
-  function handleLogOut(){
+  function handleLogOut() {
     Auth.signOut();
   }
 

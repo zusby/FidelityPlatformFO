@@ -2,9 +2,10 @@ import Navbar from "@/components/Navbar"
 import { Auth } from "@/lib/FireBase";
 import { useEffect, useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { BillBoardForm } from "./components/billboard-form";
 import { useParams } from "react-router";
+import Loading from "@/components/loadingPage";
 
 
 
@@ -35,22 +36,22 @@ export const BillBoardPage = () => {
     }, [params.billBoardID]);
 
 
-   
+
 
     if (loading) {
-        toast.loading("Retrieving data");
-    } else
-        return (
-            <>
-                <Toaster />
-                <Navbar />
-                <div className="flex-col">
-                    <div className="flex-11 space-y-4 p-8 pt-6">
+        return <Loading />
+    }
+    return (
+        <>
 
-                        <BillBoardForm initialData={billBoard} />
+            <Navbar />
+            <div className="flex-col">
+                <div className="flex-11 space-y-4 p-8 pt-6">
 
-                    </div>
+                    <BillBoardForm initialData={billBoard} />
+
                 </div>
-            </>
-        )
+            </div>
+        </>
+    )
 }

@@ -1,21 +1,13 @@
 import Protected from './components/Auth/Protected';
-import { StoreModal } from './components/Modals/store-modal';
+import SetupPage from './pages/setup-page';
 
 
 function App() {
-
-
-
-
-
-
-
-
   return (
 
     <>
       <Protected>
-        <StoreModal />
+        <SetupPage />
       </Protected>
     </>
   )

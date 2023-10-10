@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth";
 import { SizeForm } from "./components/size-form";
 import { useParams } from "react-router";
+import Loading from "@/components/loadingPage";
 
 
 
@@ -38,24 +39,17 @@ export const SizePage = () => {
 
 
     if (loading) {
-        return (
-            <>
-                <div className="flex flex-col items-center justify-center h-screen">
-                    <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
-                    <span className="mt-4 text-slate-900 font-sans"><strong>Loading...</strong></span>
-                </div>
-            </>
-        );
-    } else {
-        return (
-            <>
-                <Navbar />
-                <div className="flex-col">
-                    <div className="flex-11 space-y-4 p-8 pt-6">
-                        <SizeForm initialData={size} />
-                    </div>
-                </div>
-            </>
-        )
+        return <Loading />
     }
+    return (
+        <>
+            <Navbar />
+            <div className="flex-col">
+                <div className="flex-11 space-y-4 p-8 pt-6">
+                    <SizeForm initialData={size} />
+                </div>
+            </div>
+        </>
+    )
+
 }

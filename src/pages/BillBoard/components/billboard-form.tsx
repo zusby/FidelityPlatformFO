@@ -12,6 +12,7 @@ import toast from "react-hot-toast"
 import { useNavigate, useParams } from "react-router";
 import { AlertModal } from "@/components/Modals/alert-modal";
 import ImageUpload from "@/components/ui/image-upload";
+import Loading from "@/components/loadingPage";
 
 
 interface BillBoardFormProps {
@@ -45,7 +46,6 @@ export const BillBoardForm: React.FC<BillBoardFormProps> = ({
     //  const toastMessage = initialData ? "Billboard uptaded" : "Billboard created.";
     const action = initialData ? "Save Changes" : "Create billBoard";
 
-    console.log(initialData);
     const form = useForm<BillboardFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: initialData || {
@@ -59,7 +59,6 @@ export const BillBoardForm: React.FC<BillBoardFormProps> = ({
         try {
             setLoading(true);
 
-            console.log(data);
 
             fetch("http://localhost:8080/api/v1/billboard/add", {
                 method: 'POST',
@@ -96,21 +95,28 @@ export const BillBoardForm: React.FC<BillBoardFormProps> = ({
     const onDelete = async () => {
         try {
             setLoading(true);
-            //TODO aggiungere 
+            const res = await fetch(`http://localhost:8080/api/v1/category/${params.billboardID}/billboards`);
+            const billboards = await res.json();
 
-            fetch(`http://localhost:8080/api/v1/billboard/${params.storeID}/${params.billboardID}/delete`, {
-                method: 'DELETE',
-            });
+            if (billboards.length > 0) {
+                toast.error("One or more categories use this billboard, delete them first.");
 
-            toast.loading(`Deleting ${initialData?.label}...`);
+            } else {
+                fetch(`http://localhost:8080/api/v1/billboard/${params.storeID}/${params.billboardID}/delete`, {
+                    method: 'DELETE',
+                });
 
-            setTimeout(() => {
-                toast.dismiss();
-                toast.success(`${initialData?.label} has been succesfully deleted`);
+
+                toast.loading(`Deleting ${initialData?.label}...`);
+
                 setTimeout(() => {
-                    navigate("/");
-                }, 1000);
-            }, 3000);
+                    toast.dismiss();
+                    toast.success(`${initialData?.label} has been succesfully deleted`);
+                    setTimeout(() => {
+                        navigate("/");
+                    }, 1000);
+                }, 3000);
+            }
 
 
         } catch (error) {
@@ -121,7 +127,9 @@ export const BillBoardForm: React.FC<BillBoardFormProps> = ({
         }
     }
 
-
+    if (loading) {
+        return <Loading />
+    }
 
     return (
         <>
@@ -141,7 +149,7 @@ export const BillBoardForm: React.FC<BillBoardFormProps> = ({
                         disabled={loading}
                         variant="destructive"
                         size="icon"
-                        onClick={() => console.log(initialData)}
+                        onClick={() => setOpen(true)}
                     >
                         <Trash className="h-4 w-4" />
                     </Button>

@@ -8,9 +8,10 @@ import { Mail, Phone, Trash } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import toast, { Toaster } from "react-hot-toast"
+import toast from "react-hot-toast"
 import { useNavigate, useParams } from "react-router";
 import { AlertModal } from "@/components/Modals/alert-modal";
+import Loading from "@/components/loadingPage";
 
 
 interface settingsFormProps {
@@ -115,7 +116,7 @@ export const SettingsForm: React.FC<settingsFormProps> = ({
             setLoading(true);
             //TODO aggiungere 
 
-            fetch(`http://localhost:8080/api/v1/shop/${params.storeID}`, {
+            fetch(`http://localhost:8080/api/v1/shop/${params.storeID}/delete`, {
                 method: 'DELETE',
             });
 
@@ -136,6 +137,9 @@ export const SettingsForm: React.FC<settingsFormProps> = ({
             setLoading(false);
             setOpen(false);
         }
+    }
+    if (loading) {
+        return <Loading />
     }
 
     return (
@@ -238,7 +242,7 @@ export const SettingsForm: React.FC<settingsFormProps> = ({
 
                 </form>
             </Form>
-            <Toaster />
+
         </>
     );
 };

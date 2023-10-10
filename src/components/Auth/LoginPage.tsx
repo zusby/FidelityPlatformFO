@@ -13,11 +13,11 @@ import { UserCredential, signInWithEmailAndPassword } from 'firebase/auth'
 import { Auth } from '@/lib/FireBase'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { RegistrationDialog } from './RegistrationPage'
-
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
 
 export default function LoginPage({ className, ...props }: UserAuthFormProps) {
     const [isLoading, setIsLoading] = React.useState<boolean>(false)
+
 
 
     const formSchema = z.object({
@@ -35,6 +35,7 @@ export default function LoginPage({ className, ...props }: UserAuthFormProps) {
 
     const SignIn = async (values: z.infer<typeof formSchema>) => {
         setIsLoading(true);
+        event?.preventDefault();
 
         signInWithEmailAndPassword(Auth, values.email, values.password)
             .then((userCredential: UserCredential) => {
@@ -42,10 +43,8 @@ export default function LoginPage({ className, ...props }: UserAuthFormProps) {
                 if (!user.emailVerified) {
 
                     Auth.updateCurrentUser(user);
-                    localStorage.setItem("user", JSON.stringify(user));
-                    localStorage.setItem('photoURL', user.photoURL ? user.photoURL : '');
-                    console.log(Auth.currentUser);
-
+                    window.location.assign("/")
+                    //TODO attiva verifica a due fattori
                 }
             }).catch((error) => console.log(error.message));
 
@@ -63,10 +62,10 @@ export default function LoginPage({ className, ...props }: UserAuthFormProps) {
 
 
             <Card>
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(SignIn)}>
-                        <CardContent className=' h-auto w-auto py-1.5'>
 
+                <CardContent className=' h-auto w-auto py-1.5'>
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(SignIn)}>
                             <div className="grid gap-4">
                                 <CardTitle className=' w-ful left-1 flex '>Sign-in</CardTitle>
                                 <div className='flex justify-center align-middle '>
@@ -106,19 +105,21 @@ export default function LoginPage({ className, ...props }: UserAuthFormProps) {
                                             Sign In
                                         </Button>
                                     </div>
-                                    <div className='grid-flow-col gap-1 py-3 row-auto '>
-                                        <RegistrationDialog />
-                                    </div>
+
+
 
                                 </CardFooter>
                             </div>
-                        </CardContent>
-                    </form>
-                </Form>
-
+                        </form>
+                    </Form>
+                    <div className='grid-flow-col gap-1 py-3 row-auto '>
+                        <RegistrationDialog />
+                    </div>
+                </CardContent>
 
 
             </Card>
+
 
         </div>
     )

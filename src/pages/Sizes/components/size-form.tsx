@@ -11,6 +11,7 @@ import * as z from "zod";
 import toast from "react-hot-toast"
 import { useNavigate, useParams } from "react-router";
 import { AlertModal } from "@/components/Modals/alert-modal";
+import Loading from "@/components/loadingPage";
 
 interface SizeFormProps {
     initialData: Size | null;
@@ -25,8 +26,6 @@ const formSchema = z.object({
     createdAt: z.optional(z.unknown()),
 
 })
-
-
 
 type SizeFormValues = z.infer<typeof formSchema>;
 
@@ -56,7 +55,6 @@ export const SizeForm: React.FC<SizeFormProps> = ({
     const onSubmit = async (data: SizeFormValues) => {
         try {
             setLoading(true)
-            console.log(data);
             fetch("http://localhost:8080/api/v1/size/add", {
                 method: 'POST',
                 headers: {
@@ -64,9 +62,6 @@ export const SizeForm: React.FC<SizeFormProps> = ({
                 },
                 body: JSON.stringify(data),
             });
-
-
-
 
             toast.loading("Updating your size...");
             setTimeout(() => {
@@ -113,7 +108,9 @@ export const SizeForm: React.FC<SizeFormProps> = ({
     }
 
 
-
+    if (loading) {
+        return <Loading />
+    }
     return (
         <>
             <AlertModal

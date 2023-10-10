@@ -3,60 +3,84 @@ import Navbar from "@/components/Navbar"
 
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { Auth } from "@/lib/FireBase";
-
-import { format} from "date-fns"
+import { format } from "date-fns"
 import { CategoryColumn } from "./columns";
 import { CategoryClient } from "./components/client";
+import Loading from "@/components/loadingPage";
 const CategoriesPage = () => {
 
 
     const params = useParams();
-    const [user] = useAuthState(Auth);
     const [loading, setLoading] = useState(false);
     const baseURL = "http://localhost:8080/api/v1/";
 
     const [categories, setCategories] = useState<Category[]>([]);
-
+    const [billboards, setBillboards] = useState<BillBoard[]>([]);
 
     useEffect(() => {
-        if (user) {
+        try {
             setLoading(true);
             fetch(baseURL + `category/${params.storeID}/all`)
 
                 .then((res) => { if (res.ok) return res.json(); return null })
                 .then((data) => setCategories(data))
                 .finally(() => setLoading(false))
+        } catch (error) {
+            console.log(error);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+
+
     }, [params.storeID]);
+
+    useEffect(() => {
+        try {
+            setLoading(true);
+            fetch(baseURL + `billboard/${params.storeID}/all`)
+
+                .then((res) => { if (res.ok) return res.json(); return null })
+                .then((data) => setBillboards(data))
+                .finally(() => setLoading(false))
+        } catch (error) {
+            console.log(error);
+        }
+
+    }, [params.storeID]);
+
+    function getBillboard(category: Category) {
+        const billboard = billboards.find((billboard) => billboard.id === category.billboardID);
+        if (billboard) {
+            return billboard;
+        }
+
+    }
 
 
     const formattedCategories: CategoryColumn[] = categories
-    .map((item)=>({
-        id:item.id,
-        name:item.name,
-        billboardLabel:item.billboard.label,
-        createdAt: format(new Date(item.createdAt),'dd/MM/yyyy'),
-    }))
-    
+        ? categories.map((item) => ({
+            id: item.id,
+            name: item.name,
+            billboardLabel: getBillboard(item)?.label ?? "",
+            createdAt: format(new Date(item.createdAt), 'dd/MM/yyyy'),
+        }))
+        : [];
 
-    if (!loading) {
-        
-        return (
-            <>
-                <Navbar />
 
-                <div className="flex-col">
-                    <div className="flex-1 space-y-4 p-8 pt-6">
-                        <CategoryClient data={formattedCategories} />
-
-                    </div>
-                </div>
-            </>
-        );
+    if (loading) {
+        return <Loading />
     }
+    return (
+        <>
+            <Navbar />
+
+            <div className="flex-col">
+                <div className="flex-1 space-y-4 p-8 pt-6">
+                    <CategoryClient data={formattedCategories} />
+
+                </div>
+            </div>
+        </>
+    );
+
 }
 
 export default CategoriesPage

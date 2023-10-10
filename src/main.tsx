@@ -6,7 +6,6 @@ import App from './App';
 import LoginPage from './components/Auth/LoginPage';
 import SetupLayout from './pages/DashBoard/setupLayout';
 import DashBoardLayout from './pages/DashBoard/Layout';
-import DashBoardPage from './pages/DashBoard/dashboard-page';
 import Protected from './components/Auth/Protected';
 import ErrorPage from './pages/ErrorPage';
 import SettingsPage from './pages/DashBoard/settings-page';
@@ -21,6 +20,7 @@ import { ColorPage } from './pages/Colors/color';
 import { ProductsPage } from './pages/Products/Products';
 import { ProductPage } from './pages/Products/Product';
 import { ThemeProvider } from './dark-mone';
+import OrdersPage from './pages/Orders/orders';
 
 
 
@@ -29,7 +29,9 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <Protected><SetupLayout children={<App />} /></Protected>),
+      <Protected>
+        <SetupLayout children={<App />} />
+      </Protected>),
     errorElement: <ErrorPage errorTitle='Page not found' errorMessage='The page you were looking for doesnt exist or got moved' />,
 
   },
@@ -48,7 +50,7 @@ const router = createBrowserRouter([
     path: ':storeID',
     element: (
       <Protected>
-        <DashBoardLayout children={<DashBoardPage />} />
+        <DashBoardLayout />
       </Protected>
     ),
   },
@@ -133,6 +135,22 @@ const router = createBrowserRouter([
   },
   {
     path: ":storeID/products/:productID",
+    element: (
+      <Protected>
+        <ProductPage />
+      </Protected>
+    )
+  },
+  {
+    path: ":storeID/orders",
+    element: (
+      <Protected>
+        <OrdersPage />
+      </Protected>
+    )
+  },
+  {
+    path: ":storeID/orders/:productID",
     element: (
       <Protected>
         <ProductPage />

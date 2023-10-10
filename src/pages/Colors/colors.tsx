@@ -9,6 +9,7 @@ import { Auth } from "@/lib/FireBase";
 import { format } from "date-fns"
 import { ColorColumn } from "./columns";
 import { ColorsClient } from "./components/client";
+import Loading from "@/components/loadingPage";
 const ColorsPage = () => {
 
 
@@ -42,21 +43,23 @@ const ColorsPage = () => {
         }))
 
 
-    if (!loading) {
-
-        return (
-            <>
-                <Navbar />
-
-                <div className="flex-col">
-                    <div className="flex-1 space-y-4 p-8 pt-6">
-                        <ColorsClient data={formattedSizes} />
-
-                    </div>
-                </div>
-            </>
-        );
+    if (loading) {
+        return <Loading />
     }
+
+    return (
+        <>
+            <Navbar />
+
+            <div className="flex-col">
+                <div className="flex-1 space-y-4 p-8 pt-6">
+                    <ColorsClient data={formattedSizes} />
+
+                </div>
+            </div>
+        </>
+    );
+
 }
 
 export default ColorsPage

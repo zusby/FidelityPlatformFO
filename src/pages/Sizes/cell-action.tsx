@@ -2,7 +2,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { SizeColumn } from "./columns";
 import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { toast } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router";
 import { useState } from "react";
 import { AlertModal } from "@/components/Modals/alert-modal";
@@ -29,7 +29,6 @@ export const CellAction: React.FC<CellActionProps> = ({
     const onDelete = async () => {
         try {
             setLoading(true);
-            console.log(data.id);
 
             fetch(`http://localhost:8080/api/v1/size/${params.storeID}/${data.id}/delete`, {
                 method: 'DELETE',

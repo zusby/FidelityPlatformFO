@@ -8,9 +8,10 @@ import { Trash } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { Toaster, toast } from "react-hot-toast"
+import toast from "react-hot-toast"
 import { useNavigate, useParams } from "react-router";
 import { AlertModal } from "@/components/Modals/alert-modal";
+import Loading from "@/components/loadingPage";
 
 interface ColorFormProps {
     initialData: Color | null;
@@ -111,7 +112,9 @@ export const ColorForm: React.FC<ColorFormProps> = ({
         }
     }
 
-
+    if (loading) {
+        return <Loading />
+    }
 
     return (
         <>
@@ -139,7 +142,7 @@ export const ColorForm: React.FC<ColorFormProps> = ({
 
             </div>
             <Separator />
-            <Toaster />
+
 
 
             <Form {...form}>

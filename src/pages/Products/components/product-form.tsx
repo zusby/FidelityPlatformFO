@@ -15,6 +15,7 @@ import ImageUpload from "@/components/ui/image-upload";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { v4 as uuidv4 } from 'uuid';
+import Loading from "@/components/loadingPage";
 
 interface ProductFormProps {
     initialData: Product | null
@@ -27,7 +28,7 @@ interface ProductFormProps {
 const formSchema = z.object({
     name: z.string().min(1),
     images: z.object({
-        url: z.string(),
+        url: z.string().min(1),
         productID: z.string().min(1),
     }).array(),
     storeID: z.string().min(1),
@@ -63,7 +64,6 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     const params = useParams();
     const title = initialData ? "Edit Product" : "Create Product";
     const description = initialData ? "Edit Product" : "Add a new Product";
-    //  const toastMessage = initialData ? "Product uptaded" : "Product created.";
     const action = initialData ? "Save Changes" : "Create Product";
 
 
@@ -88,6 +88,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     const onSubmit = async (data: ProductFormValues) => {
         try {
             setLoading(true);
+            toast.loading(`Managing ${data.name}`)
 
 
             await fetch("http://localhost:8080/api/v1/product/add", {
@@ -99,7 +100,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             });
 
 
-            fetch("http://localhost:8080/api/v1/image/addList", {
+            await fetch("http://localhost:8080/api/v1/image/addList", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -110,7 +111,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
 
             setTimeout(() => {
                 toast.dismiss();
-                toast.success(`${initialData?.name} has been succesfully deleted`);
+                toast.success(`${data.name} has been succesfully added`);
                 setTimeout(() => {
                     navigate(`/${params.storeID}/products`);
                 }, 500);
@@ -128,15 +129,14 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         try {
             setLoading(true);
             //TODO aggiungere 
-
-            fetch(`http://localhost:8080/api/v1/Product/${params.storeID}/${params.ProductID}/delete`, {
-                method: 'DELETE',
-            });
-
-            fetch(`http://localhost:8080/api/v1/image/${params.ProductID}/delete`, {
-                method: 'DELETE',
-            });
             toast.loading(`Deleting ${initialData?.name}...`);
+            await fetch(`http://localhost:8080/api/v1/Product/${params.storeID}/${params.ProductID}/delete`, {
+                method: 'DELETE',
+            });
+
+            await fetch(`http://localhost:8080/api/v1/image/${params.ProductID}/delete`, {
+                method: 'DELETE',
+            });
 
             setTimeout(() => {
                 toast.dismiss();
@@ -154,9 +154,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             setOpen(false);
         }
     }
-
-
-
+    if (loading) {
+        return <Loading />
+    }
     return (
         <>
             <AlertModal

@@ -9,6 +9,7 @@ import { Auth } from "@/lib/FireBase";
 import { format } from "date-fns"
 import { SizeColumn } from "./columns";
 import { SizesClient } from "./components/client";
+import Loading from "@/components/loadingPage";
 const SizesPage = () => {
 
 
@@ -41,22 +42,22 @@ const SizesPage = () => {
             createdAt: format(new Date(item.createdAt), 'dd/MM/yyyy'),
         }))
 
-
-    if (!loading) {
-
-        return (
-            <>
-                <Navbar />
-
-                <div className="flex-col">
-                    <div className="flex-1 space-y-4 p-8 pt-6">
-                        <SizesClient data={formattedSizes} />
-
-                    </div>
-                </div>
-            </>
-        );
+    if (loading) {
+        return <Loading />
     }
+    return (
+        <>
+            <Navbar />
+
+            <div className="flex-col">
+                <div className="flex-1 space-y-4 p-8 pt-6">
+                    <SizesClient data={formattedSizes} />
+
+                </div>
+            </div>
+        </>
+    );
+
 }
 
 export default SizesPage

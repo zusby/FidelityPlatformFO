@@ -1,17 +1,14 @@
 import Navbar from "@/components/Navbar";
-import { Auth } from "@/lib/FireBase";
 import { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { Toaster } from "react-hot-toast";
 import { ProductColumn } from "./columns";
 import { format } from "date-fns";
 import { formatter } from "@/lib/utils";
 import { ProductClient } from "./components/client";
 import { useParams } from "react-router-dom";
+import Loading from "@/components/loadingPage";
 
 export const ProductsPage = () => {
     const params = useParams();
-    const [user] = useAuthState(Auth);
     const baseURL = "http://localhost:8080/api/v1/";
 
 
@@ -61,9 +58,9 @@ export const ProductsPage = () => {
             }
         }
 
-        if (user) {
-            fetchData();
-        }
+
+        fetchData();
+
 
     }, [params.storeID]);
 
@@ -90,26 +87,20 @@ export const ProductsPage = () => {
         }
         return null;
     }
-    if (!isLoading) {
-        return (
-            <>
-                <Toaster />
-                <Navbar />
 
-                <div className="flex-col">
-                    <div className="flex-1 space-y-4 p-8 pt-6">
-                        {/* Render your component with formattedProducts */}
-                        <ProductClient data={products as unknown as ProductColumn[]} />
-                    </div>
-                </div>
-            </>
-        );
-    } else {
-        return (
-            <div className="flex flex-col items-center justify-center h-screen">
-                <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
-                <span className="mt-4 text-slate-900 font-sans"><strong>Loading...</strong></span>
-            </div>
-        );
+    if (isLoading) {
+        return <Loading />
     }
+    return (
+        <>
+            <Navbar />
+            <div className="flex-col">
+                <div className="flex-1 space-y-4 p-8 pt-6">
+                    {/* Render your component with formattedProducts */}
+                    <ProductClient data={products as unknown as ProductColumn[]} />
+                </div>
+            </div>
+        </>
+    );
+
 };

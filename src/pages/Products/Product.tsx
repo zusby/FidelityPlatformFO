@@ -1,8 +1,8 @@
 import Navbar from "@/components/Navbar";
 import { useEffect, useState } from "react";
-import { Toaster } from "react-hot-toast";
 import { ProductForm } from "./components/product-form";
 import { useParams } from "react-router";
+import Loading from "@/components/loadingPage";
 
 export const ProductPage = () => {
     const params = useParams();
@@ -63,35 +63,25 @@ export const ProductPage = () => {
         fetchData();
     }, [params.productID, params.storeID]);
 
-
     if (isLoading) {
-        return (
-            <>
-                <div className="flex flex-col items-center justify-center h-screen">
-                    <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
-                    <span className="mt-4 text-slate-900 font-sans">
-                        <strong>Loading...</strong>
-                    </span>
-                </div>
-            </>
-        );
-    } else {
-        return (
-            <>
-                <Toaster />
-                <Navbar />
-                <div className="flex-col">
-                    <div className="flex-11 space-y-4 p-8 pt-6">
-                        <ProductForm
-                            initialData={product}
-                            categories={categories ? categories : []}
-                            colors={colors ? colors : []}
-                            sizes={sizes ? sizes : []}
-                            images={images ? images : []}
-                        />
-                    </div>
-                </div>
-            </>
-        );
+        return <Loading />
     }
+    return (
+        <>
+
+            <Navbar />
+            <div className="flex-col">
+                <div className="flex-11 space-y-4 p-8 pt-6">
+                    <ProductForm
+                        initialData={product}
+                        categories={categories ? categories : []}
+                        colors={colors ? colors : []}
+                        sizes={sizes ? sizes : []}
+                        images={images ? images : []}
+                    />
+                </div>
+            </div>
+        </>
+    );
+
 };

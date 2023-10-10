@@ -12,6 +12,7 @@ import toast from "react-hot-toast"
 import { useNavigate, useParams } from "react-router";
 import { AlertModal } from "@/components/Modals/alert-modal";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import Loading from "@/components/loadingPage";
 
 
 interface CategoryFormProps {
@@ -66,7 +67,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
     const onSubmit = async (data: CategoryFormValues) => {
         try {
             setLoading(true)
-            console.log(data);
+
             fetch("http://localhost:8080/api/v1/category/add", {
                 method: 'POST',
                 headers: {
@@ -96,33 +97,42 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
         }
     }
 
-    const onDelete = () => {
+    const onDelete = async () => {
         try {
             setLoading(true);
-            fetch(`http://localhost:8080/api/v1/category/${params.storeID}/${params.categoryID}/delete`, {
-                method: 'DELETE',
-            });
+            const response = await fetch(`http://localhost:8080/api/v1/product/category/${params.categoryID}/all`);
 
-            toast.loading(`Deleting ${initialData?.name}...`);
+            const productsData = await response.json();
 
-            setTimeout(() => {
-                toast.dismiss();
-                toast.success(`${initialData?.name} has been succesfully deleted`);
+
+            if (productsData && productsData.length > 0) {
+                toast.error("Products exist in this category. Delete them first.");
+            } else {
+                await fetch(`http://localhost:8080/api/v1/category/${params.storeID}/${params.categoryID}/delete`, {
+                    method: 'DELETE',
+                });
+
+                toast.loading(`Deleting ${initialData?.name}...`);
+
                 setTimeout(() => {
-                    navigate(`/${params.storeID}/category`);
-                }, 1000);
-            }, 3000);
-
-
+                    toast.dismiss();
+                    toast.success(`${initialData?.name} has been successfully deleted`);
+                    setTimeout(() => {
+                        navigate(`/${params.storeID}/category`);
+                    }, 1000);
+                }, 3000);
+            }
         } catch (error) {
-            toast.error("Make sure you removed products that use this category first.")
+            toast.error("there was an error with your request");
         } finally {
             setLoading(false);
             setOpen(false);
         }
     }
 
-
+    if (loading) {
+        return <Loading />
+    }
 
     return (
         <>

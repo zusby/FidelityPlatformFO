@@ -2,10 +2,11 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { CategoryColumn } from "./columns";
 import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { toast } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router";
 import { useState } from "react";
 import { AlertModal } from "@/components/Modals/alert-modal";
+import Loading from "@/components/loadingPage";
 
 
 interface CellActionProps {
@@ -29,24 +30,29 @@ export const CellAction: React.FC<CellActionProps> = ({
     const onDelete = async () => {
         try {
             setLoading(true);
-            console.log(data.id);
+            const response = await fetch(`http://localhost:8080/api/v1/product/category/${data.id}/all`);
 
-            fetch(`http://localhost:8080/api/v1/category/${params.storeID}/${data.id}/delete`, {
-                method: 'DELETE',
-            });
-            toast.loading(`Deleting ${data.name}...`);
+            const productsData = await response.json();
 
-            setTimeout(() => {
-                toast.dismiss();
-                toast.success(`${data.name} has been succesfully deleted`);
+            if (productsData && productsData.length > 0) {
+                toast.error("Products exist in this category. Delete them first.");
+            } else {
+                await fetch(`http://localhost:8080/api/v1/category/${params.storeID}/${data.id}/delete`, {
+                    method: 'DELETE',
+                });
+
+                toast.loading(`Deleting  ${data.name}...`);
+
                 setTimeout(() => {
-                }, 1000);
-                navigate(0);
-            }, 3000);
-
-
+                    toast.dismiss();
+                    toast.success(`${data.name} has been successfully deleted`);
+                    setTimeout(() => {
+                        navigate(`/${params.storeID}/category`);
+                    }, 1000);
+                }, 3000);
+            }
         } catch (error) {
-            toast.error("Make sure you removed categories that use this billboard first.")
+            toast.error("there was an error with your request");
         } finally {
             setLoading(false);
             setOpen(false);
@@ -54,7 +60,9 @@ export const CellAction: React.FC<CellActionProps> = ({
     }
 
 
-
+    if (loading) {
+        return <Loading />
+    }
 
     return (
         <>

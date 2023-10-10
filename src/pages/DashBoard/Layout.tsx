@@ -3,17 +3,13 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useAuthState } from 'react-firebase-hooks/auth'
 import ErrorPage from "../ErrorPage";
-import Navbar from "../../components/Navbar";
-import { Progress } from "@/components/ui/progress";
+import Loading from "@/components/loadingPage";
+import DashBoardPage from "./dashboard-page";
 
 
 // ... (import statements)
 
-export default function DashBoardLayout({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
+export default function DashBoardLayout() {
     const [store, setStore] = useState<Store | null>(null); // Initialize with null
     const [loading, setLoading] = useState(false);
     const { storeID } = useParams();
@@ -32,7 +28,7 @@ export default function DashBoardLayout({
                 .catch((error) => {
                     console.error("could not find Store:", error);
                 })
-                .finally(()=>setLoading(false));
+                .finally(() => setLoading(false));
         }
     }, [storeID, user]);
 
@@ -41,28 +37,21 @@ export default function DashBoardLayout({
         navigate("/sign-in");
         return null;
     }
-
-    if(!store){
-        if(loading){
-            const progressValue = loading ? 0 : 100;
-            return (
-                <div>
-                    <Progress value={progressValue} max={100}>
-                        <Progress style={{ height: '4px' }}>
-                            <Progress style={{ backgroundColor: 'var(--accent)' }} />
-                        </Progress>
-                    </Progress>
-                </div>
-            )
-                
+    if (!store) {
+        if (loading) {
+            return <Loading />
         }
         else
-        return <ErrorPage errorTitle={"Store not found"} errorMessage={"The store you were looking for doesnt exist or got moved"}  />
+            return <ErrorPage errorTitle={"Store not found"} errorMessage={"The store you were looking for doesnt exist or got moved"} />
+    }
+    if (store) {
+        if (!store.shopOwners.includes(user.uid))
+            return <ErrorPage errorTitle={"Store not found"} errorMessage={"The store you were looking for doesnt exist or got moved"} />
     }
     return (
         <>
-            <Navbar/>
-            {children}
+
+            <DashBoardPage />
         </>
     );
 }

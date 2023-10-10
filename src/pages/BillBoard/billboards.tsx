@@ -6,7 +6,8 @@ import { useParams } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Auth } from "@/lib/FireBase";
 import { BillBoardColumn } from "./columns";
-import { format} from "date-fns"
+import { format } from "date-fns"
+import Loading from "@/components/loadingPage";
 const BillBoardsPage = () => {
 
 
@@ -32,28 +33,30 @@ const BillBoardsPage = () => {
 
 
     const formattedBillboards: BillBoardColumn[] = billBoards
-    .map((item)=>({
-        id:item.id,
-        label:item.label,
-        createdAt: format(new Date(item.createdAt),'dd/MM/yyyy'),
-    }))
-    
+        .map((item) => ({
+            id: item.id,
+            label: item.label,
+            createdAt: format(new Date(item.createdAt), 'dd/MM/yyyy'),
+        }))
 
-    if (!loading) {
-        
-        return (
-            <>
-                <Navbar />
 
-                <div className="flex-col">
-                    <div className="flex-1 space-y-4 p-8 pt-6">
-                        <BillBoardClient data={formattedBillboards} />
-
-                    </div>
-                </div>
-            </>
-        );
+    if (loading) {
+        return <Loading />
     }
+
+    return (
+        <>
+            <Navbar />
+
+            <div className="flex-col">
+                <div className="flex-1 space-y-4 p-8 pt-6">
+                    <BillBoardClient data={formattedBillboards} />
+
+                </div>
+            </div>
+        </>
+    );
+
 }
 
 export default BillBoardsPage

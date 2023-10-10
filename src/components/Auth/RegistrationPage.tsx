@@ -15,26 +15,21 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import DatePicker from 'react-date-picker';
+
 import './DatePicker.css'
 import 'react-calendar/dist/Calendar.css';
-import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Auth } from "@/lib/FireBase";
 import { useNavigate } from "react-router";
+import { DateField, DatePicker } from "../ui/date-picker";
+import { getLocalTimeZone } from "@internationalized/date";
+
 
 export function RegistrationDialog() {
 
-    const [address, setAddress] = useState();
     const navigate = useNavigate();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const handleValueChange = (address: any) => {
-        setAddress(address);
-        if (address) {
-            const newAddress = address.value.structured_formatting.main_text
-            form.setValue('address.street', newAddress);
-        }
-    };
+
 
     const formSchema = z.object({
         name: z.string().min(1, { message: "Name cant be empty" }),
@@ -73,15 +68,13 @@ export function RegistrationDialog() {
 
 
     const submitRegistration = async (values: z.infer<typeof formSchema>) => {
-
-        form.setValue('address.street', address ? address["value"]["structured_formatting.main_text"] : "");
         form.setValue('rank', 'CUSTOMER');
-
         createUserWithEmailAndPassword(Auth, values.email, values.password)
             .then((userCredencial) => {
                 const user = userCredencial.user;
-                console.log(user);
-                registerUser(values);
+                if (user)
+                    registerUser(values);
+
                 navigate("/");
             }).catch((error) => console.log(error.message))
 
@@ -99,6 +92,17 @@ export function RegistrationDialog() {
                 body: JSON.stringify(user),
             }).catch((error) => console.error(error));
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -157,26 +161,15 @@ export function RegistrationDialog() {
                                     <FormItem>
                                         <FormLabel>Birth Date:</FormLabel>
                                         <FormControl>
-                                            <div>
 
-                                                <DatePicker
-
-                                                    id="birthDate"
-                                                    name="birthDate"
-                                                    required
-                                                    dayPlaceholder="1"
-                                                    monthPlaceholder="1"
-                                                    value={field.value}
-
-
-                                                    className="w-full"
-                                                />
-
-                                            </div>
+                                            <DatePicker label="Pick a date" onChange={(date) => field.value = date.toDate(getLocalTimeZone())} >
+                                                <DateField />
+                                            </DatePicker>
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>)}
-                            /> <FormField name='address.street'
+                            />
+                            <FormField name='address.street'
                                 control={form.control}
                                 render={({ field }) => (
                                     <FormItem>
