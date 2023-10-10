@@ -21,7 +21,6 @@ interface IState {
 class Protected extends React.Component<IProps, IState> {
     removeListener: any;
 
-
     constructor(props: IProps) {
         super(props);
         this.state = {
@@ -31,8 +30,9 @@ class Protected extends React.Component<IProps, IState> {
         };
     }
 
-    componentDidMount() {
+    
 
+    componentDidMount() {
         this.removeListener = onAuthStateChanged(Auth, (user) => {
             if (user) {
                 this.setState({ logged: true, loading: false, user: user });

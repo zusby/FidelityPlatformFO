@@ -21,6 +21,7 @@ import { ProductsPage } from './pages/Products/Products';
 import { ProductPage } from './pages/Products/Product';
 import { ThemeProvider } from './dark-mone';
 import OrdersPage from './pages/Orders/orders';
+import Authorization from './components/Auth/authorization-layer';
 
 
 
@@ -50,7 +51,9 @@ const router = createBrowserRouter([
     path: ':storeID',
     element: (
       <Protected>
+        <Authorization>
         <DashBoardLayout />
+        </Authorization>
       </Protected>
     ),
   },
@@ -58,14 +61,18 @@ const router = createBrowserRouter([
     path: ":storeID/settings",
     element: (
       <Protected>
-        <SettingsPage />
+        <Authorization>
+          <SettingsPage />
+        </Authorization>
       </Protected>)
   },
   {
     path: ":storeID/billboards",
     element: (
       <Protected>
-        <BillBoardsPage />
+        <Authorization>
+          <BillBoardsPage />
+        </Authorization>
       </Protected>
     )
   },
@@ -73,7 +80,9 @@ const router = createBrowserRouter([
     path: ":storeID/billboards/:billboardID",
     element: (
       <Protected>
-        <BillBoardPage />
+        <Authorization>
+          <BillBoardPage />
+        </Authorization>
       </Protected>
     )
   },
@@ -81,7 +90,9 @@ const router = createBrowserRouter([
     path: ":storeID/category",
     element: (
       <Protected>
-        <CategoriesPage />
+        <Authorization>
+         <CategoriesPage />
+        </Authorization>
       </Protected>
     )
   },
@@ -89,7 +100,9 @@ const router = createBrowserRouter([
     path: ":storeID/category/:categoryID",
     element: (
       <Protected>
-        <CategoryPage />
+        <Authorization>
+          <CategoryPage />
+        </Authorization>
       </Protected>
     )
   },
@@ -97,7 +110,9 @@ const router = createBrowserRouter([
     path: ":storeID/sizes",
     element: (
       <Protected>
+        <Authorization>
         <SizesPage />
+        </Authorization>
       </Protected>
     )
   },
@@ -105,7 +120,9 @@ const router = createBrowserRouter([
     path: ":storeID/sizes/:sizeID",
     element: (
       <Protected>
+        <Authorization>
         <SizePage />
+        </Authorization>
       </Protected>
     )
   },
@@ -113,7 +130,9 @@ const router = createBrowserRouter([
     path: ":storeID/colors",
     element: (
       <Protected>
-        <ColorsPage />
+        <Authorization>
+          <ColorsPage />
+        </Authorization>
       </Protected>
     )
   },
@@ -121,7 +140,9 @@ const router = createBrowserRouter([
     path: ":storeID/colors/:colorID",
     element: (
       <Protected>
+        <Authorization>
         <ColorPage />
+        </Authorization>
       </Protected>
     )
   },
@@ -129,7 +150,9 @@ const router = createBrowserRouter([
     path: ":storeID/products",
     element: (
       <Protected>
+        <Authorization>
         <ProductsPage />
+        </Authorization>
       </Protected>
     )
   },
@@ -137,7 +160,9 @@ const router = createBrowserRouter([
     path: ":storeID/products/:productID",
     element: (
       <Protected>
-        <ProductPage />
+        <Authorization>
+          <ProductPage />
+        </Authorization>
       </Protected>
     )
   },
@@ -145,7 +170,9 @@ const router = createBrowserRouter([
     path: ":storeID/orders",
     element: (
       <Protected>
+        <Authorization>
         <OrdersPage />
+        </Authorization>
       </Protected>
     )
   },
@@ -153,7 +180,9 @@ const router = createBrowserRouter([
     path: ":storeID/orders/:productID",
     element: (
       <Protected>
-        <ProductPage />
+        <Authorization>
+          <ProductPage />
+        </Authorization>
       </Protected>
     )
   },
