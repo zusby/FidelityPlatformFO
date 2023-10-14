@@ -13,10 +13,16 @@ import { UserCredential, signInWithEmailAndPassword } from 'firebase/auth'
 import { Auth } from '@/lib/FireBase'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { RegistrationDialog } from './RegistrationPage'
+import { Modal } from '../ui/modal'
+import { useState } from 'react'
+import { useStoreModal } from '@/hooks/use-store-modal'
+import { LucideBookLock } from 'lucide-react'
+import ForgotPassword from './forgot-password-form'
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
 
 export default function LoginPage({ className, ...props }: UserAuthFormProps) {
-    const [isLoading, setIsLoading] = React.useState<boolean>(false)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const forgotPassword = useStoreModal();
 
 
 
@@ -58,7 +64,13 @@ export default function LoginPage({ className, ...props }: UserAuthFormProps) {
 
     return (
         <div className={cn("grid gap-3 justify-center ", className)} {...props}>
-
+            <Modal title='Password reset'
+                description='Insert your email to recover your password'
+                isOpen={forgotPassword.isOpen}
+                onClose={forgotPassword.onClose}
+                Icon={LucideBookLock}>
+                <ForgotPassword />
+            </Modal>
 
 
             <Card>
@@ -96,7 +108,7 @@ export default function LoginPage({ className, ...props }: UserAuthFormProps) {
                                 />
                                 <div className="grid gap-1">
 
-                                    <a href='' className='  text-slate-500 flex left-0 bottom-0 '>Forgot Password?</a>
+                                    <a href='#' onClick={forgotPassword.onOpen} className='text-slate-500 flex left-0 bottom-0 '>Forgot Password?</a>
                                 </div>
                                 <CardFooter className='w-full grid '>
                                     <div>

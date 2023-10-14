@@ -9,7 +9,7 @@ import { Button } from "../ui/button";
 import { Auth } from "@/lib/FireBase";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
-import { Store } from "lucide-react";
+import { StoreIcon } from "lucide-react";
 
 
 
@@ -58,7 +58,6 @@ export const StoreModal = () => {
     });
 
     const onSubmit = async (form: z.infer<typeof formSchema>) => {
-        //TODO aggiungi form per SHOP
 
         if (user) {
             form.shopOwners = [user.uid];
@@ -76,17 +75,19 @@ export const StoreModal = () => {
                 storeModal.onClose();
             });
         }
-
     }
+
+
 
     return (
         <>
-            <Store />
+
             <Modal
-                title="Create Store"
+                title="Create your store"
                 description="Add a new store to manage products and categories"
                 isOpen={storeModal.isOpen}
                 onClose={storeModal.onClose}
+                Icon={StoreIcon}
             >
 
                 <div>

@@ -1,7 +1,5 @@
 import Navbar from "@/components/Navbar"
-import { Auth } from "@/lib/FireBase";
 import { useEffect, useState } from "react"
-import { useAuthState } from "react-firebase-hooks/auth";
 import toast from "react-hot-toast";
 import { BillBoardForm } from "./components/billboard-form";
 import { useParams } from "react-router";
@@ -12,13 +10,13 @@ import Loading from "@/components/loadingPage";
 export const BillBoardPage = () => {
 
     const params = useParams();
-    const [user] = useAuthState(Auth);
     const [loading, setLoading] = useState(false);
     const baseURL = "http://localhost:8080/api/v1/";
     const [billBoard, setBillBoard] = useState<BillBoard | null>(null);
 
     useEffect(() => {
-        if (user) {
+        if (params.billBoardID !== "new" && params.billBoardID) {
+            console.log(params.billBoardID)
             setLoading(true);
             fetch(baseURL + `billboard/${params.billboardID}`)
 

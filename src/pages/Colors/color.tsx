@@ -1,7 +1,5 @@
 import Navbar from "@/components/Navbar"
-import { Auth } from "@/lib/FireBase";
 import { useEffect, useState } from "react"
-import { useAuthState } from "react-firebase-hooks/auth";
 import { ColorForm } from "./components/color-form";
 import { useParams } from "react-router";
 import Loading from "@/components/loadingPage";
@@ -11,13 +9,12 @@ import Loading from "@/components/loadingPage";
 export const ColorPage = () => {
 
     const params = useParams();
-    const [user] = useAuthState(Auth);
     const [loading, setLoading] = useState(false);
     const baseURL = "http://localhost:8080/api/v1/";
     const [color, setColor] = useState<Size | null>(null);
 
     useEffect(() => {
-        if (user) {
+        if (params.colorID !== "new") {
             setLoading(true);
             fetch(baseURL + `color/${params.colorID}`)
 

@@ -16,19 +16,17 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import './DatePicker.css'
 import 'react-calendar/dist/Calendar.css';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Auth } from "@/lib/FireBase";
 import { useNavigate } from "react-router";
 import { DateField, DatePicker } from "../ui/date-picker";
 import { getLocalTimeZone } from "@internationalized/date";
-import { useAuthState } from "react-firebase-hooks/auth";
 
 
 export function RegistrationDialog() {
 
-    
+
 
     const navigate = useNavigate();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -1,4 +1,4 @@
-import { StoreIcon } from "lucide-react";
+import { LucideIcon } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "./dialog";
 
 interface ModalProps {
@@ -7,6 +7,7 @@ interface ModalProps {
     isOpen: boolean
     onClose: () => void;
     children?: React.ReactNode;
+    Icon: LucideIcon
 
 }
 export const Modal: React.FC<ModalProps> = ({
@@ -14,7 +15,8 @@ export const Modal: React.FC<ModalProps> = ({
     description,
     isOpen,
     onClose,
-    children
+    children,
+    Icon
 }) => {
     const onChange = (open: boolean) => {
         if (!open) {
@@ -26,8 +28,9 @@ export const Modal: React.FC<ModalProps> = ({
         <Dialog open={isOpen} onOpenChange={onChange}>
             <DialogContent>
                 <DialogHeader>
+                    <Icon />
                     <div className="flex items-center">
-                        <StoreIcon className="mr-2" />
+
                         <DialogTitle>{title}</DialogTitle>
                     </div>
                     <DialogDescription>{description}</DialogDescription>

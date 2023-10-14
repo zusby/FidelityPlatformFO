@@ -19,9 +19,9 @@ import ColorsPage from './pages/Colors/colors';
 import { ColorPage } from './pages/Colors/color';
 import { ProductsPage } from './pages/Products/Products';
 import { ProductPage } from './pages/Products/Product';
-import { ThemeProvider } from './dark-mone';
 import OrdersPage from './pages/Orders/orders';
 import Authorization from './components/Auth/authorization-layer';
+
 
 
 
@@ -52,7 +52,7 @@ const router = createBrowserRouter([
     element: (
       <Protected>
         <Authorization>
-        <DashBoardLayout />
+          <DashBoardLayout />
         </Authorization>
       </Protected>
     ),
@@ -91,7 +91,7 @@ const router = createBrowserRouter([
     element: (
       <Protected>
         <Authorization>
-         <CategoriesPage />
+          <CategoriesPage />
         </Authorization>
       </Protected>
     )
@@ -111,7 +111,7 @@ const router = createBrowserRouter([
     element: (
       <Protected>
         <Authorization>
-        <SizesPage />
+          <SizesPage />
         </Authorization>
       </Protected>
     )
@@ -121,7 +121,7 @@ const router = createBrowserRouter([
     element: (
       <Protected>
         <Authorization>
-        <SizePage />
+          <SizePage />
         </Authorization>
       </Protected>
     )
@@ -141,7 +141,7 @@ const router = createBrowserRouter([
     element: (
       <Protected>
         <Authorization>
-        <ColorPage />
+          <ColorPage />
         </Authorization>
       </Protected>
     )
@@ -151,7 +151,7 @@ const router = createBrowserRouter([
     element: (
       <Protected>
         <Authorization>
-        <ProductsPage />
+          <ProductsPage />
         </Authorization>
       </Protected>
     )
@@ -171,7 +171,7 @@ const router = createBrowserRouter([
     element: (
       <Protected>
         <Authorization>
-        <OrdersPage />
+          <OrdersPage />
         </Authorization>
       </Protected>
     )
@@ -186,13 +186,10 @@ const router = createBrowserRouter([
       </Protected>
     )
   },
-
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ThemeProvider defaultTheme='light' storageKey="vite-ui-theme">
-      <RouterProvider router={router} />
-    </ThemeProvider>
+    <RouterProvider router={router} />
   </React.StrictMode>,
 )

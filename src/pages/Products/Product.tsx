@@ -42,7 +42,7 @@ export const ProductPage = () => {
                 const colorsData = await colorsResponse.json();
                 setColors(colorsData);
 
-                if (params.productID) {
+                if (params.productID && params.productID !== "new") {
                     const productResponse = await fetch(baseURL + `product/${params.productID}`);
                     if (productResponse.ok) {
                         const productData = await productResponse.json();
@@ -55,7 +55,6 @@ export const ProductPage = () => {
 
                 setIsLoading(false);
             } catch (error) {
-                console.error("Error fetching data:", error);
                 setIsLoading(false);
             }
         }

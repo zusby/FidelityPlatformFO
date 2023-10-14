@@ -114,8 +114,6 @@ export const SettingsForm: React.FC<settingsFormProps> = ({
     const onDelete = async () => {
         try {
             setLoading(true);
-            //TODO aggiungere 
-
             fetch(`http://localhost:8080/api/v1/shop/${params.storeID}/delete`, {
                 method: 'DELETE',
             });
@@ -152,8 +150,8 @@ export const SettingsForm: React.FC<settingsFormProps> = ({
             />
             <div className="flex items-center justify-between">
                 <Heading
-                    title="Settings"
-                    description="Manage store preferences"
+                    title="Store details"
+                    description="Manage store details"
                 />
 
                 <Button
