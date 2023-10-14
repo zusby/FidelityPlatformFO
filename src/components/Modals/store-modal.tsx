@@ -62,7 +62,6 @@ export const StoreModal = () => {
         if (user) {
             form.shopOwners = [user.uid];
             toast.loading("Creating shop");
-
             await fetch("http://localhost:8080/api/v1/shop/add", {
                 method: 'POST',
                 headers: {
@@ -88,7 +87,7 @@ export const StoreModal = () => {
                 isOpen={storeModal.isOpen}
                 onClose={storeModal.onClose}
                 Icon={StoreIcon}
-            >
+            >+
 
                 <div>
                     <div className="space-y-4 py-2 pb-4">
