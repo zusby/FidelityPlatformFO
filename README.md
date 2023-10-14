@@ -1,27 +1,33 @@
-# React + TypeScript + Vite
+# Fidelity Paltform Front End Admin Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Fidelity Paltform client used to Manage store/stores (e-commerce) with [FidelityPlatform](https://github.com/zusby/LoyalityPlatform) as backend to manage data.
 
-Currently, two official plugins are available:
+## Documentation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The web page is implemented using basic React-Vite-Typescript + tailwind and [Shadcn](https://ui.shadcn.com/) for the UI components. It uses [Firebase](https://firebase.google.com/) for the login and registration of the store admins.
 
-## Expanding the ESLint configuration
+## Environment Variables
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+NOT YET IMPLEMENTED
 
-- Configure the top-level `parserOptions` property like this:
+`DEFAULT_URL` your Backend url
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+## Deployment
+
+To deploy this project run
+
+```bash
+  npm run dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Features
+
+- Live previews
+- Instant deployment
+- Cross platform
+- Instantly create new stores
+- Dashboard to check monthly income and order status
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
