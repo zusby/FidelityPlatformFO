@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 import { formatter } from "@/lib/utils";
-import { CreditCard, DollarSign, PackageCheck, PackageMinus } from "lucide-react";
+import { CreditCard, DollarSign, EuroIcon, PackageCheck, PackageMinus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 
@@ -77,7 +77,7 @@ const DashBoardPage = () => {
                                     Total revenue
                                 </CardTitle>
 
-                                <DollarSign className="h-4 w-4 text-muted-foreground" />
+                                <EuroIcon className="h-4 w-4 text-muted-foreground" />
                             </CardHeader>
                             <CardContent>
                                 <div className="text-2xl font-bold">

@@ -128,7 +128,6 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     const onDelete = async () => {
         try {
             setLoading(true);
-            //TODO aggiungere 
             toast.loading(`Deleting ${initialData?.name}...`);
             await fetch(`http://localhost:8080/api/v1/Product/${params.storeID}/${params.ProductID}/delete`, {
                 method: 'DELETE',

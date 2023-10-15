@@ -1,6 +1,5 @@
 
 import { useForm } from "react-hook-form";
-
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
@@ -46,11 +45,14 @@ const ProfileForm: React.FC<ProfileEditorProps> = ({
     })
 
     const resetPassword = (email: string) => {
-        toast.loading("Sending reset password link", { id: "loading" })
 
-        sendPasswordResetEmail(Auth, email)
-            .then(() => { toast.success("A password reset link has been sent to your email") })
-            .catch(() => { toast.error("An error has occurred, please try again later") }).finally(() => toast.remove("loading"))
+        const res = sendPasswordResetEmail(Auth, email);
+
+        toast.promise(res, {
+            loading: "Sending reset password link",
+            success: "A password reset link has been sent to your email",
+            error: (err) => err.code
+        })
 
     }
 
@@ -77,7 +79,7 @@ const ProfileForm: React.FC<ProfileEditorProps> = ({
         toast.promise(res, {
             loading: 'Updating profile',
             success: ' Profile updated',
-            error: 'There was an error while updating your profile'
+            error: (err) => err.code
         })
 
     }

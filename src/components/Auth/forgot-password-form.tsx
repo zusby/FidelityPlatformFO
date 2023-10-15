@@ -26,7 +26,7 @@ const ForgotPassword = () => {
         toast.promise(res, {
             loading: "Sending password reset link",
             success: "Reset password sent succesfully",
-            error: "email not registered"
+            error: (res) => res.code
         })
     }
 

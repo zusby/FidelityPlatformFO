@@ -46,11 +46,11 @@ export default function LoginPage({ className, ...props }: UserAuthFormProps) {
         signInWithEmailAndPassword(Auth, values.email, values.password)
             .then((userCredential: UserCredential) => {
                 const user = userCredential.user;
+                //TODO attiva verifica email
                 if (!user.emailVerified) {
-
                     Auth.updateCurrentUser(user);
                     window.location.assign("/")
-                    //TODO attiva verifica a due fattori
+
                 }
             }).catch((error) => console.log(error.message));
 
