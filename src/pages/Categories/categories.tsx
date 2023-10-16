@@ -12,7 +12,7 @@ const CategoriesPage = () => {
 
     const params = useParams();
     const [loading, setLoading] = useState(false);
-    const baseURL = "http://localhost:8080/api/v1/";
+    const baseURL = import.meta.env.VITE_BACKEND_URL;
 
     const [categories, setCategories] = useState<Category[]>([]);
     const [billboards, setBillboards] = useState<BillBoard[]>([]);
@@ -30,7 +30,7 @@ const CategoriesPage = () => {
         }
 
 
-    }, [params.storeID]);
+    }, [baseURL, params.storeID]);
 
     useEffect(() => {
         try {
@@ -44,7 +44,7 @@ const CategoriesPage = () => {
             console.log(error);
         }
 
-    }, [params.storeID]);
+    }, [baseURL, params.storeID]);
 
     function getBillboard(category: Category) {
         const billboard = billboards.find((billboard) => billboard.id === category.billboardID);

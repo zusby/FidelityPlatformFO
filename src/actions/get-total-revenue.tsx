@@ -1,8 +1,8 @@
-
+const base_url = import.meta.env.VITE_BACKEND_URL;
 
 export const getProduct = async (productID: string) => {
     try {
-        const response = await fetch(`http://localhost:8080/api/v1/product/${productID}`);
+        const response = await fetch(base_url + `product/${productID}`);
         const data = await response.json();
         return data;
     } catch (error) {
@@ -14,7 +14,7 @@ export const getProduct = async (productID: string) => {
 
 export const getAllPaidOrderItems = async (storeID: string) => {
     try {
-        const response = await fetch(`http://localhost:8080/api/v1/order/${storeID}/paid/all`);
+        const response = await fetch(base_url + `order/${storeID}/paid/all`);
         const data = await response.json();
         return data;
     } catch (error) {
@@ -25,7 +25,7 @@ export const getAllPaidOrderItems = async (storeID: string) => {
 }
 export const getTotalRevenue = async (storeID: string) => {
     try {
-        const response = await fetch(`http://localhost:8080/api/v1/order/${storeID}/revenue/all`);
+        const response = await fetch(base_url + `order/${storeID}/revenue/all`);
         const data = await response.json();
         return data;
     } catch (error) {
@@ -36,7 +36,7 @@ export const getTotalRevenue = async (storeID: string) => {
 }
 export const getListedProducts = async (storeID: string) => {
     try {
-        const response = await fetch(`http://localhost:8080/api/v1/product/${storeID}/available/all`);
+        const response = await fetch(base_url + `product/${storeID}/available/all`);
         const data = await response.json();
         return data;
     } catch (error) {
@@ -47,7 +47,7 @@ export const getListedProducts = async (storeID: string) => {
 }
 export const getArchivedProducts = async (storeID: string) => {
     try {
-        const response = await fetch(`http://localhost:8080/api/v1/product/${storeID}/archived/all`);
+        const response = await fetch(base_url + `product/${storeID}/archived/all`);
         const data = await response.json();
         return data;
     } catch (error) {

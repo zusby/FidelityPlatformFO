@@ -9,7 +9,7 @@ import Loading from "@/components/loadingPage";
 
 export const ProductsPage = () => {
     const params = useParams();
-    const baseURL = "http://localhost:8080/api/v1/";
+    const baseURL = import.meta.env.VITE_BACKEND_URL;
 
 
     const [isLoading, setIsLoading] = useState(true);

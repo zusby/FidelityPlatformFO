@@ -67,9 +67,10 @@ const ProfileForm: React.FC<ProfileEditorProps> = ({
         user.name = data.name ?? user.name;
         user.surname = data.surname ?? user.surname;
         user.telephoneNumber = data.telephoneNumber ?? user.telephoneNumber;
+        const base_url = import.meta.env.VITE_BACKEND_URL;
 
 
-        const res = fetch(`http://localhost:8080/api/v1/customer/${user.id}/update`, {
+        const res = fetch(base_url + `customer/${user.id}/update`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

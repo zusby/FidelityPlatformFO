@@ -65,7 +65,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     const title = initialData ? "Edit Product" : "Create Product";
     const description = initialData ? "Edit Product" : "Add a new Product";
     const action = initialData ? "Save Changes" : "Create Product";
-
+    const baseURL = import.meta.env.VITE_BACKEND_URL;
 
     const form = useForm<ProductFormValues>({
         resolver: zodResolver(formSchema),
@@ -91,7 +91,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             toast.loading(`Managing ${data.name}`)
 
 
-            await fetch("http://localhost:8080/api/v1/product/add", {
+            await fetch(baseURL + "product/add", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -100,7 +100,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             });
 
 
-            await fetch("http://localhost:8080/api/v1/image/addList", {
+            await fetch(baseURL + "image/addList", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -129,11 +129,11 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         try {
             setLoading(true);
             toast.loading(`Deleting ${initialData?.name}...`);
-            await fetch(`http://localhost:8080/api/v1/Product/${params.storeID}/${params.ProductID}/delete`, {
+            await fetch(baseURL + `product/${params.storeID}/${params.ProductID}/delete`, {
                 method: 'DELETE',
             });
 
-            await fetch(`http://localhost:8080/api/v1/image/${params.ProductID}/delete`, {
+            await fetch(baseURL + `image/${params.ProductID}/delete`, {
                 method: 'DELETE',
             });
 

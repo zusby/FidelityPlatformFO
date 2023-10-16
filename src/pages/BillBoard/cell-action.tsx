@@ -21,6 +21,7 @@ export const CellAction: React.FC<CellActionProps> = ({
     const params = useParams();
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
+    const base_url = import.meta.env.VITE_BACKEND_URL;
     const onCopy = (id: string) => {
         navigator.clipboard.writeText(id);
         toast.success("Billboard ID copied to clipboard")
@@ -30,14 +31,14 @@ export const CellAction: React.FC<CellActionProps> = ({
     const onDelete = async () => {
         try {
             setLoading(true);
-            const res = await fetch(`http://localhost:8080/api/v1/category/${params.billboardID}/billboards`);
+            const res = await fetch(base_url + `category/${params.billboardID}/billboards`);
             const billboards = await res.json();
 
             if (billboards.length > 0) {
                 toast.error("One or more categories use this billboard, delete them first.");
 
             } else {
-                fetch(`http://localhost:8080/api/v1/billboard/${params.storeID}/${params.billboardID}/delete`, {
+                fetch(base_url + `billboard/${params.storeID}/${params.billboardID}/delete`, {
                     method: 'DELETE',
                 });
 

@@ -45,7 +45,7 @@ export const BillBoardForm: React.FC<BillBoardFormProps> = ({
     const description = initialData ? "Edit billboard" : "Add a new Billboard";
     //  const toastMessage = initialData ? "Billboard uptaded" : "Billboard created.";
     const action = initialData ? "Save Changes" : "Create billBoard";
-
+    const base_url = import.meta.env.VITE_BACKEND_URL;
     const form = useForm<BillboardFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: initialData || {
@@ -60,7 +60,7 @@ export const BillBoardForm: React.FC<BillBoardFormProps> = ({
             setLoading(true);
 
 
-            fetch("http://localhost:8080/api/v1/billboard/add", {
+            fetch(base_url + "billboard/add", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -95,14 +95,14 @@ export const BillBoardForm: React.FC<BillBoardFormProps> = ({
     const onDelete = async () => {
         try {
             setLoading(true);
-            const res = await fetch(`http://localhost:8080/api/v1/category/${params.billboardID}/billboards`);
+            const res = await fetch(base_url + `category/${params.billboardID}/billboards`);
             const billboards = await res.json();
 
             if (billboards.length > 0) {
                 toast.error("One or more categories use this billboard, delete them first.");
 
             } else {
-                fetch(`http://localhost:8080/api/v1/billboard/${params.storeID}/${params.billboardID}/delete`, {
+                fetch(base_url + `billboard/${params.storeID}/${params.billboardID}/delete`, {
                     method: 'DELETE',
                 });
 

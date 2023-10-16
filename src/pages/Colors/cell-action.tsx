@@ -21,6 +21,8 @@ export const CellAction: React.FC<CellActionProps> = ({
     const params = useParams();
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
+    const base_url = import.meta.env.VITE_BACKEND_URL;
+
     const onCopy = (id: string) => {
         navigator.clipboard.writeText(id);
         toast.success("Color ID copied to clipboard")
@@ -31,7 +33,7 @@ export const CellAction: React.FC<CellActionProps> = ({
         try {
             setLoading(true);
 
-            fetch(`http://localhost:8080/api/v1/color/${params.storeID}/${data.id}/delete`, {
+            fetch(base_url + `color/${params.storeID}/${data.id}/delete`, {
                 method: 'DELETE',
             });
             toast.loading(`Deleting ${data.name}...`);

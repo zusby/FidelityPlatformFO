@@ -46,10 +46,11 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 ))}
             </div>
             <div className="flex items-center gap-4">
-                <CloudinaryUploadWidget onUpload={onUpload} uploadPreset="nkobp9eh" disabled={disabled} />
+                <CloudinaryUploadWidget onUpload={onUpload} uploadPreset={import.meta.env.CLOUDINARY_UPLOADPRESET} disabled={disabled} />
             </div>
         </div>
     );
 };
+
 
 export default ImageUpload;

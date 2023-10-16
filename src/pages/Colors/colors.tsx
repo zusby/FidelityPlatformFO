@@ -16,7 +16,7 @@ const ColorsPage = () => {
     const params = useParams();
     const [user] = useAuthState(Auth);
     const [loading, setLoading] = useState(false);
-    const baseURL = "http://localhost:8080/api/v1/";
+    const baseURL = import.meta.env.VITE_BACKEND_URL;
 
     const [colors, setColors] = useState<Color[]>([]);
 

@@ -27,8 +27,7 @@ const OrdersPage = () => {
     const params = useParams();
 
     const [loading, setLoading] = useState(false);
-    const baseURL = "http://localhost:8080/api/v1/";
-
+    const baseURL = import.meta.env.VITE_BACKEND_URL;
     const [formattedOrders, setFormattedOrders] = useState<OrderColumn[]>([]);
 
 
@@ -86,7 +85,7 @@ const OrdersPage = () => {
         };
 
         fetchData();
-    }, [params.storeID]);
+    }, [baseURL, params.storeID]);
 
 
 

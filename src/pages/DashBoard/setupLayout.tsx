@@ -9,7 +9,7 @@ export default function SetupLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const baseURL = "http://localhost:8080/api/v1/";
+    const baseURL = import.meta.env.VITE_BACKEND_URL;
     const user = Auth.currentUser; // Get the current user
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
@@ -35,7 +35,7 @@ export default function SetupLayout({
                     console.error("Error fetching data:", error);
                 }).finally(() => setLoading(false));
         }
-    }, [navigate, user]);
+    }, [baseURL, navigate, user]);
     if (loading) {
         return <Loading />
     } else

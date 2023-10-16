@@ -21,6 +21,7 @@ export const CellAction: React.FC<CellActionProps> = ({
     const params = useParams();
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
+    const base_url = import.meta.env.VITE_BACKEND_URL;
     const onCopy = (id: string) => {
         navigator.clipboard.writeText(id);
         toast.success("Billboard ID copied to clipboard")
@@ -30,14 +31,14 @@ export const CellAction: React.FC<CellActionProps> = ({
     const onDelete = async () => {
         try {
             setLoading(true);
-            const response = await fetch(`http://localhost:8080/api/v1/product/category/${data.id}/all`);
+            const response = await fetch(base_url + `product/category/${data.id}/all`);
 
             const productsData = await response.json();
 
             if (productsData && productsData.length > 0) {
                 toast.error("Products exist in this category. Delete them first.");
             } else {
-                await fetch(`http://localhost:8080/api/v1/category/${params.storeID}/${data.id}/delete`, {
+                await fetch(base_url + `category/${params.storeID}/${data.id}/delete`, {
                     method: 'DELETE',
                 });
 

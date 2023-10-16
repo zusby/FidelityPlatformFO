@@ -6,7 +6,7 @@ import Loading from "@/components/loadingPage";
 
 export const ProductPage = () => {
     const params = useParams();
-    const baseURL = "http://localhost:8080/api/v1/";
+    const baseURL = import.meta.env.VITE_BACKEND_URL;
 
     // State variables to track loading status of each API call
     const [isLoading, setIsLoading] = useState(true);

@@ -44,7 +44,7 @@ export const ColorForm: React.FC<ColorFormProps> = ({
     const description = initialData ? "Edit color" : "Add a new color";
     //  const toastMessage = initialData ? "color uptaded" : "color created.";
     const action = initialData ? "Save Changes" : "Create color";
-
+    const base_url = import.meta.env.VITE_BACKEND_URL;
     const form = useForm<ColorFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: initialData || {
@@ -57,7 +57,7 @@ export const ColorForm: React.FC<ColorFormProps> = ({
     const onSubmit = async (data: ColorFormValues) => {
         try {
             setLoading(true)
-            fetch("http://localhost:8080/api/v1/color/add", {
+            fetch(base_url + "color/add", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -89,7 +89,7 @@ export const ColorForm: React.FC<ColorFormProps> = ({
     const onDelete = () => {
         try {
             setLoading(true);
-            fetch(`http://localhost:8080/api/v1/color/${params.storeID}/${params.colorID}/delete`, {
+            fetch(base_url + `color/${params.storeID}/${params.colorID}/delete`, {
                 method: 'DELETE',
             });
 

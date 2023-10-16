@@ -75,6 +75,7 @@ export const SettingsForm: React.FC<settingsFormProps> = ({
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const params = useParams();
+    const baseURL = import.meta.env.VITE_BACKEND_URL;
     const form = useForm<SettingsFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: initialData,
@@ -84,7 +85,7 @@ export const SettingsForm: React.FC<settingsFormProps> = ({
     const onSubmit = async (data: SettingsFormValues) => {
         try {
             setLoading(true);
-            fetch("http://localhost:8080/api/v1/shop/add", {
+            fetch(baseURL + "shop/add", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -114,7 +115,7 @@ export const SettingsForm: React.FC<settingsFormProps> = ({
     const onDelete = async () => {
         try {
             setLoading(true);
-            fetch(`http://localhost:8080/api/v1/shop/${params.storeID}/delete`, {
+            fetch(baseURL + `shop/${params.storeID}/delete`, {
                 method: 'DELETE',
             });
 

@@ -40,22 +40,25 @@ const Authorization: React.FC<isAutorized> = ({
     const [loadingStore, setLoadingStore] = useState(false);
     const [store, setStore] = useState<Store>();
     const { storeID } = useParams();
+    const base_url = import.meta.env.VITE_BACKEND_URL;
 
-    async function getStore(storeID: string) {
-        setLoadingStore(true);
-        const res = fetch(`http://localhost:8080/api/v1/shop/${storeID}`)
-            .then((res) => res.json()).finally(() => setLoadingStore(false))
-        return res;
-    }
+
+
 
 
     useEffect(() => {
+        async function getStore(storeID: string) {
+            setLoadingStore(true);
+            const res = fetch(base_url + `shop/${storeID}`)
+                .then((res) => res.json()).finally(() => setLoadingStore(false))
+            return res;
+        }
         async function fetchStore() {
             const store = await getStore(storeID ?? "");
             setStore(store);
         }
         fetchStore();
-    }, [storeID])
+    }, [base_url, storeID])
 
     if (loadingStore || loading) {
         return <Loading />

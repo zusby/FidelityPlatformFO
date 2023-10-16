@@ -54,7 +54,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
     const description = initialData ? "Edit category" : "Add a new category";
     //  const toastMessage = initialData ? "category uptaded" : "category created.";
     const action = initialData ? "Save Changes" : "Create category";
-
+    const base_url = import.meta.env.VITE_BACKEND_URL;
     const form = useForm<CategoryFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: initialData || {
@@ -68,7 +68,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
         try {
             setLoading(true)
 
-            fetch("http://localhost:8080/api/v1/category/add", {
+            fetch(base_url + "category/add", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -100,7 +100,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
     const onDelete = async () => {
         try {
             setLoading(true);
-            const response = await fetch(`http://localhost:8080/api/v1/product/category/${params.categoryID}/all`);
+            const response = await fetch(base_url + `product/category/${params.categoryID}/all`);
 
             const productsData = await response.json();
 
@@ -108,7 +108,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
             if (productsData && productsData.length > 0) {
                 toast.error("Products exist in this category. Delete them first.");
             } else {
-                await fetch(`http://localhost:8080/api/v1/category/${params.storeID}/${params.categoryID}/delete`, {
+                await fetch(base_url + `category/${params.storeID}/${params.categoryID}/delete`, {
                     method: 'DELETE',
                 });
 

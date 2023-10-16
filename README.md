@@ -9,8 +9,8 @@ The web page is implemented using basic React-Vite-Typescript + tailwind and [Sh
 ## Environment Variables
 
 NOT YET IMPLEMENTED
-`FIREBASE_API` your firebase API key
-`DEFAULT_URL` your Backend url
+`Firebase account` your firebase API key
+`VITE_BACKEND_URL` your Backend url
 
 ## Deployment
 

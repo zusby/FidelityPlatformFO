@@ -2,13 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getAuth} from "firebase/auth";
 //TODO put into .env file
 const firebaseConfig = {
-  apiKey: "AIzaSyA-di4SIrRpAZmEaboJu5IavidbikAf4Zw",
-  authDomain: "ids-fidelityprogram-kya.firebaseapp.com",
-  projectId: "ids-fidelityprogram-kya",
-  storageBucket: "ids-fidelityprogram-kya.appspot.com",
-  messagingSenderId: "825561615429",
-  appId: "1:825561615429:web:84f50ef8ba2ec8ce39272c",
-  measurementId: "G-9XTS9KE82C"
+  apiKey: import.meta.env.FIREBASE_APIKEY,
+  authDomain:import.meta.env.FIREBASE_AUTHDOMAIN,
+  projectId: import.meta.env.FIREBASE_PROJECTID,
+  storageBucket: import.meta.env.FIREBASE_STORAGEBUCKET,
+  messagingSenderId: import.meta.env.FIREBASE_MESSAGINGSENDERID,
+  appId: import.meta.env.FIREBASE_APPID,
+  measurementId: import.meta.env.FIREBASE_MEASUREMENTID
 }
 
 const app = initializeApp(firebaseConfig);

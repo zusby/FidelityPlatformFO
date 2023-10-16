@@ -36,6 +36,8 @@ export const StoreModal = () => {
     const user = Auth.currentUser;
     const storeModal = useStoreModal();
     const navigate = useNavigate();
+    const base_url = import.meta.env.VITE_BACKEND_URL;
+
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -62,7 +64,7 @@ export const StoreModal = () => {
         if (user) {
             form.shopOwners = [user.uid];
             toast.loading("Creating shop");
-            await fetch("http://localhost:8080/api/v1/shop/add", {
+            await fetch(base_url + "shop/add", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

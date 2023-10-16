@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 import { formatter } from "@/lib/utils";
-import { CreditCard, DollarSign, EuroIcon, PackageCheck, PackageMinus } from "lucide-react";
+import { CreditCard, EuroIcon, PackageCheck, PackageMinus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 

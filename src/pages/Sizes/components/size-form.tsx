@@ -42,6 +42,7 @@ export const SizeForm: React.FC<SizeFormProps> = ({
     const description = initialData ? "Edit size" : "Add a new size";
     //  const toastMessage = initialData ? "size uptaded" : "size created.";
     const action = initialData ? "Save Changes" : "Create size";
+    const baseURL = import.meta.env.VITE_BACKEND_URL;
 
     const form = useForm<SizeFormValues>({
         resolver: zodResolver(formSchema),
@@ -55,7 +56,7 @@ export const SizeForm: React.FC<SizeFormProps> = ({
     const onSubmit = async (data: SizeFormValues) => {
         try {
             setLoading(true)
-            fetch("http://localhost:8080/api/v1/size/add", {
+            fetch(baseURL + "size/add", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -84,7 +85,7 @@ export const SizeForm: React.FC<SizeFormProps> = ({
     const onDelete = () => {
         try {
             setLoading(true);
-            fetch(`http://localhost:8080/api/v1/size/${params.storeID}/${params.sizeID}/delete`, {
+            fetch(baseURL + `size/${params.storeID}/${params.sizeID}/delete`, {
                 method: 'DELETE',
             });
 

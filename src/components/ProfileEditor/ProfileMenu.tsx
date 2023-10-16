@@ -5,12 +5,8 @@ import { ClipLoader } from "react-spinners";
 import ProfileForm from './profile-editor';
 import { Button } from '../ui/button';
 
-async function getUserProfile(userID: string) {
-  const result = await fetch(`http://localhost:8080/api/v1/customer/${userID}`)
-    .then((response) => response.json())
-    .catch((error) => console.log(error));
-  return result;
-}
+
+
 
 
 
@@ -19,14 +15,24 @@ const Profilenavbar = () => {
   const [userData, setUserData] = useState<UserProfile | null>();
   const user = Auth.currentUser;
   const [isOpen, setIsOpen] = useState(false);
+  const base_url = import.meta.env.VITE_BACKEND_URL;
+
+
 
   useEffect(() => {
+    async function getUserProfile(userID: string) {
+      const result = await fetch(base_url + `customer/${userID}`)
+        .then((response) => response.json())
+        .catch((error) => console.log(error));
+      return result;
+    }
+
     if (user) {
       getUserProfile(user?.uid).then((res) => {
-        setUserData(res); // Update user data state once the API call is completed
+        setUserData(res);
       });
     }
-  }, [user]);
+  }, [base_url, user]);
 
   const openModal = () => {
     setIsOpen(true);

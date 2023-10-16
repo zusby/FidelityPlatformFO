@@ -26,6 +26,7 @@ import { getLocalTimeZone } from "@internationalized/date";
 
 export function RegistrationDialog() {
 
+    const base_url = import.meta.env.VITE_BACKEND_URL;
 
 
     const navigate = useNavigate();
@@ -84,7 +85,7 @@ export function RegistrationDialog() {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function registerUser(user: any) {
-        fetch(`http://localhost:8080/api/v1/customer/register`,
+        fetch(base_url + `customer/register`,
             {
                 method: "POST",
                 headers: {

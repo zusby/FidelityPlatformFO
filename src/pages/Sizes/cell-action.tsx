@@ -20,6 +20,7 @@ export const CellAction: React.FC<CellActionProps> = ({
     const params = useParams();
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
+    const baseURL = import.meta.env.VITE_BACKEND_URL;
     const onCopy = (id: string) => {
         navigator.clipboard.writeText(id);
         toast.success("Size ID copied to clipboard")
@@ -30,7 +31,7 @@ export const CellAction: React.FC<CellActionProps> = ({
         try {
             setLoading(true);
 
-            fetch(`http://localhost:8080/api/v1/size/${params.storeID}/${data.id}/delete`, {
+            fetch(baseURL + `size/${params.storeID}/${data.id}/delete`, {
                 method: 'DELETE',
             });
             toast.loading(`Deleting ${data.name}...`);

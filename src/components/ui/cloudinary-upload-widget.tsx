@@ -18,7 +18,7 @@ const CloudinaryUploadWidget: React.FC<CloudinaryUploadWidgetProps> = ({
 
 
   useEffect(() => {
-    const cloudName = "durpaps2k";
+    const cloudName = import.meta.env.CLOUDINARY_CLOUDNAME;
 
     //@ts-expect-error cloudinary error
     const myWidget = window.cloudinary.createUploadWidget(

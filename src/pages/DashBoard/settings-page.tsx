@@ -11,22 +11,22 @@ const SettingsPage = () => {
   const { storeID } = useParams();
   const [store, setStore] = useState<Store | null>(null);
   const [loading, setLoading] = useState(true);
-
-  async function getStores(storeID: string) {
-    const result = await fetch(`http://localhost:8080/api/v1/shop/${storeID}`)
-      .then((response) => response.json())
-      .catch((error) => console.log(error))
-      .finally(() => setLoading(false));
-    return result;
-  }
+  const base_url = import.meta.env.VITE_BACKEND_URL;
 
 
   useEffect(() => {
+    async function getStores(storeID: string) {
+      const result = await fetch(base_url + `shop/${storeID}`)
+        .then((response) => response.json())
+        .catch((error) => console.log(error))
+        .finally(() => setLoading(false));
+      return result;
+    }
 
     getStores(storeID ?? "").then((res) => {
-      setStore(res); // Update user data state once the API call is completed
+      setStore(res);
     });
-  }, [storeID]);
+  }, [base_url, storeID]);
 
 
   if (loading) {

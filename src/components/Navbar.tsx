@@ -9,21 +9,22 @@ import { Toaster } from "react-hot-toast";
 const Navbar = () => {
   const userID = Auth.currentUser?.uid;
   const [stores, setStores] = useState<Store[] | null>(null);
+  const base_url = import.meta.env.VITE_BACKEND_URL;
 
-  async function getStores(userID: string) {
-    const result = await fetch(`http://localhost:8080/api/v1/shop/${userID}/shops`)
-      .then((response) => response.json())
-    return result;
-  }
 
 
   useEffect(() => {
+    async function getStores(userID: string) {
+      const result = await fetch(base_url + `shop/${userID}/shops`)
+        .then((response) => response.json())
+      return result;
+    }
     if (userID) {
       getStores(userID).then((res) => {
         setStores(res); // Update user data state once the API call is completed
       });
     }
-  }, [userID]);
+  }, [base_url, userID]);
 
 
 

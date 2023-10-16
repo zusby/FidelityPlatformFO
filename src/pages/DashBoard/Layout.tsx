@@ -13,7 +13,7 @@ export default function DashBoardLayout() {
     const [store, setStore] = useState<Store | null>(null); // Initialize with null
     const [loading, setLoading] = useState(false);
     const { storeID } = useParams();
-    const baseURL = "http://localhost:8080/api/v1/";
+    const baseURL = import.meta.env.VITE_BACKEND_URL;
     const navigate = useNavigate();
     const [user] = useAuthState(Auth);
 
@@ -30,7 +30,7 @@ export default function DashBoardLayout() {
                 })
                 .finally(() => setLoading(false));
         }
-    }, [storeID, user]);
+    }, [baseURL, storeID, user]);
 
 
     if (!user) {

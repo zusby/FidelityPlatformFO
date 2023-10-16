@@ -11,7 +11,7 @@ export const CategoryPage = () => {
     const [loading, setLoading] = useState(false);
     const [category, setCategory] = useState<Category | null>(null);
     const params = useParams();
-    const baseURL = "http://localhost:8080/api/v1/";
+    const baseURL = import.meta.env.VITE_BACKEND_URL;
     const [billBoards, setBillBoards] = useState<BillBoard[]>([]);
 
     useEffect(() => {
@@ -29,7 +29,7 @@ export const CategoryPage = () => {
                 })
                 .finally(() => setLoading(false));
         }
-    }, [params.categoryID]);
+    }, [baseURL, params.categoryID]);
 
 
     useEffect(() => {
