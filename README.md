@@ -8,7 +8,6 @@ The web page is implemented using basic React-Vite-Typescript + tailwind and [Sh
 
 ## Environment Variables
 
-NOT YET IMPLEMENTED
 `Firebase account` your firebase API key
 `VITE_BACKEND_URL` your Backend url
 
