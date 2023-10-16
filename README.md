@@ -13,8 +13,11 @@ The web page is implemented using basic React-Vite-Typescript + tailwind and [Sh
 
 ## Deployment
 
+Clone the repository run
+```bash
+  npm i
+```
 To deploy this project run
-
 ```bash
   npm run dev
 ```
