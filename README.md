@@ -1,6 +1,6 @@
-# Fidelity Paltform Front End Admin Dashboard
+# Fidelity Platform Front End Admin Dashboard
 
-Fidelity Paltform client used to Manage store/stores (e-commerce) with [FidelityPlatform](https://github.com/zusby/LoyalityPlatform) as backend to manage data.
+Fidelity Platform client used to Manage store/stores (e-commerce) with [FidelityPlatform](https://github.com/zusby/LoyalityPlatform) as backend to manage data.
 
 ## Documentation
 
